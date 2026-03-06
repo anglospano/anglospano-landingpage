@@ -1,0 +1,2928 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anglospano</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2856;
+    --navy-light: #243060;
+    --blue-light: #7ecef4;
+    --sky: #85c7f2;
+    --orange: #f5841f;
+    --teal: #2aada8;
+    --yellow: #f5c518;
+    --cream: #f5f0eb;
+    --white: #ffffff;
+    --dark: #1a2856;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── SHAPES ─── */
+  .shape { position: absolute; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideLeft {
+    from { opacity: 0; transform: translateX(-60px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideRight {
+    from { opacity: 0; transform: translateX(60px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.06); }
+  }
+  @keyframes stairDrop {
+    from { opacity: 0; transform: translateY(-30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.75);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* ─────────────────────────────────────
+     SECTION 1 — HERO
+  ───────────────────────────────────── */
+  #hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Left decorative column */
+  .hero-left {
+    position: absolute;
+    left: 40px;
+    bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    animation: fadeIn 1s ease forwards;
+  }
+  .hero-left .hl-semicircle { width: 60px; height: 30px; background: #4a6cf7; border-radius: 60px 60px 0 0; }
+  .hero-left .hl-semicircle2 { width: 48px; height: 24px; background: #4a6cf7; border-radius: 48px 48px 0 0; margin-top: 4px; }
+  .hero-left .hl-semicircle3 { width: 36px; height: 18px; background: #4a6cf7; border-radius: 36px 36px 0 0; margin-top: 4px; }
+  .hero-left .hl-box { width: 70px; height: 70px; background: var(--teal); display: flex; align-items: center; justify-content: center; }
+  .hero-left .hl-search { font-size: 2rem; }
+  .hero-left .hl-quarter {
+    width: 70px; height: 70px;
+    background: var(--yellow);
+    border-radius: 0 0 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left .hl-quarter::before {
+    content:''; position:absolute; top:0; left:0;
+    width:35px; height:35px;
+    background: var(--cream);
+    border-radius: 0 0 35px 0;
+  }
+  .hero-left .hl-quarter::after {
+    content:''; position:absolute; bottom:0; right:0;
+    width:35px; height:35px;
+    background: var(--cream);
+    border-radius: 35px 0 0 0;
+  }
+  .hero-left .hl-stairs {
+    width: 70px; height: 50px;
+    background: #5b82d4;
+    clip-path: polygon(0 100%, 0 66%, 33% 66%, 33% 33%, 66% 33%, 66% 0, 100% 0, 100% 100%);
+  }
+
+  /* Right decorative column */
+  .hero-right {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    animation: fadeIn 1s ease 0.3s both;
+  }
+  .hero-right .hr-stair {
+    width: 90px; height: 60px;
+    background: var(--orange);
+    clip-path: polygon(0 100%, 0 0, 100% 0, 100% 33%, 66% 33%, 66% 66%, 33% 66%, 33% 100%);
+    margin-right: 20px;
+  }
+  .hero-right .hr-book-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--teal);
+    padding: 8px;
+  }
+  .hr-book { width: 36px; height: 48px; background: var(--yellow); border-radius: 3px; position: relative; }
+  .hr-book::before { content:''; position:absolute; top:6px; left:4px; right:4px; height:5px; background: rgba(255,255,255,.5); border-radius:2px;}
+  .hero-right .hr-blue-rect { width: 70px; background: #4a6cf7; display: flex; align-items: center; justify-content: center; padding: 6px; }
+  .hero-right .hr-triangle-white { width: 0; height: 0; border-left: 28px solid transparent; border-right: 28px solid transparent; border-bottom: 44px solid white; }
+  .hero-right .hr-orange-bg { width: 70px; background: var(--orange); display: flex; align-items: center; justify-content: center; padding: 6px; }
+  .hero-right .hr-triangle-orange { width: 0; height: 0; border-left: 28px solid transparent; border-right: 28px solid transparent; border-bottom: 44px solid var(--orange); }
+  .hero-right .hr-yellow-arch { width: 70px; height: 50px; background: var(--yellow); border-radius: 35px 35px 0 0; }
+
+  .hero-title {
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    font-weight: 800;
+    color: var(--blue-light);
+    letter-spacing: -2px;
+    animation: fadeUp 1s ease 0.2s both;
+    text-align: center;
+  }
+
+  .hero-nav {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
+  .hero-btn {
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .hero-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  .btn-orange { background: var(--orange); color: var(--navy); }
+  .btn-teal   { background: var(--teal);   color: white; }
+  .btn-yellow { background: var(--yellow); color: var(--navy); }
+
+  /* ─────────────────────────────────────
+     SECTION 2 — ¿QUÉ SOMOS?
+  ───────────────────────────────────── */
+  #que-somos {
+    background: var(--sky);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 10%;
+    position: relative;
+    overflow: hidden;
+    gap: 60px;
+  }
+
+  .qs-text { flex: 1; }
+  .qs-text h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .qs-text p {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .qs-illustration {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 340px;
+  }
+
+  .qs-svg-wrap {
+    position: relative;
+    width: 420px;
+    max-width: 100%;
+    animation: floatY 5s ease-in-out infinite;
+    filter: drop-shadow(0 24px 48px rgba(26,40,86,0.18));
+  }
+
+  .qs-deco-star {
+    position: absolute;
+    animation: floatY 3s ease-in-out infinite reverse;
+  }
+  .qs-deco-star.s1 { top: -18px; right: 40px; width: 44px; height: 44px; animation-delay: 0s; }
+  .qs-deco-star.s2 { top: 30px;  left: -10px; width: 28px; height: 28px; animation-delay: 0.6s; }
+  .qs-deco-star.s3 { bottom: 20px; right: -14px; width: 36px; height: 36px; animation-delay: 1.1s; }
+
+  /* ─── PROPÓSITO ─── */
+  .prop-illustration {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-width: 340px;
+  }
+
+  .prop-svg-wrap {
+    position: relative;
+    width: 420px;
+    max-width: 100%;
+    animation: floatY 5s ease-in-out infinite;
+    filter: drop-shadow(0 20px 40px rgba(26,40,86,0.12));
+  }
+
+  .prop-deco {
+    position: absolute;
+  }
+  .prop-deco.star1 {
+    top: -22px; left: 50%;
+    transform: translateX(-50%);
+    animation: floatY 3s ease-in-out infinite reverse;
+  }
+  .prop-deco.burst {
+    bottom: -28px; right: 10px;
+    animation: spin 14s linear infinite;
+  }
+
+
+
+  /* ─────────────────────────────────────
+     SECTION 4 — PROPÓSITO
+  ───────────────────────────────────── */
+  #proposito {
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 10%;
+    gap: 60px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .prop-text { flex: 1; }
+  .prop-text h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 28px;
+  }
+  .prop-text p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.8;
+    max-width: 450px;
+  }
+
+  /* (prop illustration now uses SVG — see .prop-svg-wrap above) */
+
+  /* ─────────────────────────────────────
+     SECTION 5 — SUBORDINATE BILINGUAL
+  ───────────────────────────────────── */
+  #bilingual {
+    background: var(--navy);
+    padding: 100px 8%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #bilingual h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  #bilingual .sub-subtitle {
+    text-align: center;
+    color: var(--blue-light);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 60px;
+  }
+
+  .bilingual-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .bilingual-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .bilingual-card:hover { transform: translateY(-8px); }
+
+  .bc-header {
+    background: var(--teal);
+    padding: 18px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: white;
+  }
+
+  .bc-body {
+    background: var(--orange);
+    padding: 28px 20px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.7;
+    min-height: 180px;
+  }
+
+  .sub-starburst {
+    position: absolute;
+    top: 40px; right: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: -8px;
+  }
+  .sub-half {
+    width: 50px; height: 25px;
+    background: var(--yellow);
+    border-radius: 25px 25px 0 0;
+    margin: 2px auto;
+  }
+  .sub-half:nth-child(2) { width: 38px; }
+  .sub-half:nth-child(3) { width: 28px; }
+
+  /* ─────────────────────────────────────
+     SECTION 6 — PUNTOS PRINCIPALES
+  ───────────────────────────────────── */
+  #puntos {
+    background: var(--orange);
+    padding: 90px 8% 100px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .puntos-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 60px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+  }
+
+  .puntos-left { flex: 0 0 260px; }
+  .puntos-left h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 700;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .puntos-character {
+    font-size: 7rem;
+    line-height: 1;
+    animation: floatY 3s ease-in-out infinite;
+    display: block;
+    margin-top: 12px;
+  }
+
+  /* ── HOOK / ANCLAJE ── */
+  .puntos-hook {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .hook-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1.5px solid rgba(255,255,255,0.5);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+  }
+
+  .puntos-hook h3 {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 900;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+  .puntos-hook h3 em {
+    font-style: normal;
+    color: var(--navy);
+    background: var(--yellow);
+    padding: 0 8px;
+    border-radius: 6px;
+  }
+
+  .puntos-hook p {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.75;
+    max-width: 580px;
+  }
+
+  /* ── CARDS ── */
+  .puntos-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .punto-item {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .punto-item::after {
+    content: '→';
+    position: absolute;
+    bottom: 20px; right: 24px;
+    font-size: 1.3rem;
+    color: var(--orange);
+    font-weight: 900;
+    transition: transform 0.25s;
+  }
+  .punto-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  }
+  .punto-item:hover::after { transform: translateX(5px); }
+
+  .punto-icon { font-size: 2.6rem; }
+  .punto-item h4 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .punto-item p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #5a6a8a;
+    line-height: 1.55;
+  }
+
+  /* ─────────────────────────────────────
+     SECTION 7 — METODOLOGÍA
+  ───────────────────────────────────── */
+  #metodologia {
+    background: var(--cream);
+    padding: 100px 8%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .met-header {
+    max-width: 820px;
+    margin: 0 auto 70px;
+    text-align: center;
+  }
+
+  .met-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+
+  .met-header h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  /* ── HOOK CALLOUT ── */
+  .met-callout {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .met-callout .callout-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    animation: floatY 3s ease-in-out infinite;
+  }
+  .met-callout .callout-text {}
+  .met-callout .callout-text strong {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--yellow);
+    margin-bottom: 8px;
+  }
+  .met-callout .callout-text p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+  }
+  .met-callout .callout-text p span {
+    color: var(--blue-light);
+    font-weight: 800;
+  }
+
+  .met-desc {
+    font-size: 1.05rem;
+    color: #5a6a8a;
+    line-height: 1.8;
+    font-weight: 600;
+  }
+
+  /* ── ACCORDION ── */
+  .met-accordion {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .acc-item {
+    border: 2px solid rgba(26,40,86,0.1);
+    border-radius: 18px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.25s, border-color 0.25s;
+    background: white;
+  }
+  .acc-item.open {
+    box-shadow: 0 12px 48px rgba(26,40,86,0.15);
+    border-color: var(--teal);
+  }
+
+  .acc-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 28px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .acc-header:hover { background: rgba(42,173,168,0.05); }
+
+  .acc-num {
+    width: 44px; height: 44px;
+    background: var(--navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .acc-item.open .acc-num { background: var(--teal); }
+
+  .acc-header-text { flex: 1; }
+  .acc-header-text h4 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+  .acc-header-text span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #7a8aaa;
+  }
+
+  .acc-emoji { font-size: 1.8rem; }
+
+  .acc-arrow {
+    font-size: 1.3rem;
+    color: var(--teal);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .acc-item.open .acc-arrow { transform: rotate(180deg); }
+
+  .acc-body {
+    display: none;
+    padding: 0 28px 28px 28px;
+    animation: fadeSlideDown 0.3s ease;
+  }
+  .acc-item.open .acc-body { display: block; }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .acc-intro-box {
+    background: #f0fdf9;
+    border-left: 4px solid var(--teal);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.65;
+  }
+
+  .acc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .acc-mini-card {
+    background: #f7f9fc;
+    border: 1.5px solid rgba(26,40,86,0.08);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .acc-mini-card h5 {
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .acc-mini-card ul { list-style: none; padding: 0; }
+  .acc-mini-card ul li {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #4a5a7a;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(26,40,86,0.06);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .acc-mini-card ul li:last-child { border-bottom: none; }
+  .acc-mini-card ul li::before { content: '✓'; color: var(--teal); font-weight: 900; flex-shrink: 0; }
+
+  .acc-tip {
+    background: linear-gradient(135deg, var(--yellow), #ffd84a);
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.55;
+  }
+  .acc-tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+  /* responsive puntos */
+  @media (max-width: 900px) {
+    .puntos-items { grid-template-columns: 1fr; }
+    .puntos-top { flex-direction: column; }
+    .acc-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .puntos-items { grid-template-columns: 1fr; }
+    .met-callout { flex-direction: column; }
+  }
+
+  /* ─────────────────────────────────────
+     SECTION 8 — CONTENIDO DE VALOR
+  ───────────────────────────────────── */
+  #contenido {
+    background: var(--navy);
+    padding: 100px 8% 110px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cont-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 56px;
+  }
+  .cont-header h2 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    color: var(--blue-light);
+    margin-bottom: 18px;
+  }
+  .cont-header p {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.75;
+  }
+
+  /* ── TABS ── */
+  .cont-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .ctab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 2px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.22s;
+  }
+  .ctab-btn:hover {
+    border-color: rgba(255,255,255,0.4);
+    color: white;
+    background: rgba(255,255,255,0.06);
+  }
+  .ctab-btn.active {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+    box-shadow: 0 4px 20px rgba(42,173,168,0.4);
+  }
+  .ctab-btn .tb-ico { font-size: 1.1rem; }
+
+  /* ── TAB PANELS ── */
+  .cont-panel { display: none; }
+  .cont-panel.active {
+    display: block;
+    animation: fadeSlideDown 0.35s ease;
+  }
+
+  /* ── TIPS GRID ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .tip-card {
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .tip-card.open {
+    border-color: var(--teal);
+    box-shadow: 0 8px 40px rgba(42,173,168,0.2);
+  }
+  .tip-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 22px;
+  }
+  .tip-num {
+    width: 34px; height: 34px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .tip-card.open .tip-num { background: var(--yellow); color: var(--navy); }
+  .tip-card-header h4 {
+    flex: 1;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.3;
+  }
+  .tip-toggle {
+    font-size: 1.1rem;
+    color: var(--teal);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .tip-card.open .tip-toggle { transform: rotate(180deg); }
+
+  .tip-body {
+    display: none;
+    padding: 0 22px 22px;
+  }
+  .tip-card.open .tip-body { display: block; }
+
+  .tip-body p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .tip-tag {
+    display: inline-block;
+    background: rgba(245,197,24,0.15);
+    border: 1px solid rgba(245,197,24,0.4);
+    color: var(--yellow);
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 3px 12px;
+    border-radius: 50px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── LIBROS GRID ── */
+  .libros-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .libro-card {
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .libro-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--teal);
+    transform: translateY(-4px);
+  }
+  .libro-spine {
+    flex-shrink: 0;
+    width: 52px; height: 72px;
+    border-radius: 4px 8px 8px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: -3px 3px 10px rgba(0,0,0,0.4);
+  }
+  .libro-info h4 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .libro-author {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .libro-info p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+  }
+  .libro-level {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 50px;
+    letter-spacing: 0.08em;
+  }
+  .lvl-a { background: rgba(42,173,168,0.2); color: var(--teal); border: 1px solid rgba(42,173,168,0.4); }
+  .lvl-b { background: rgba(245,197,24,0.15); color: var(--yellow); border: 1px solid rgba(245,197,24,0.4); }
+  .lvl-c { background: rgba(245,132,31,0.15); color: var(--orange); border: 1px solid rgba(245,132,31,0.4); }
+
+  /* ── APPS GRID ── */
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .app-card {
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 24px 20px;
+    text-align: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+  .app-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--orange);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  }
+  .app-icon-wrap {
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 16px;
+  }
+  .app-card h4 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .app-uso {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+    color: var(--navy);
+  }
+  .app-card p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+  }
+  .app-free {
+    margin-top: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--teal);
+  }
+
+  /* ── MEDIOS GRID ── */
+  .medios-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .medio-card {
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .medio-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--blue-light);
+    transform: translateY(-4px);
+  }
+  .medio-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    animation: floatY 4s ease-in-out infinite;
+  }
+  .medio-card:nth-child(2) .medio-icon { animation-delay: 0.5s; }
+  .medio-card:nth-child(3) .medio-icon { animation-delay: 1s; }
+  .medio-card:nth-child(4) .medio-icon { animation-delay: 1.5s; }
+  .medio-info h4 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 4px;
+  }
+  .medio-tipo {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--blue-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  .medio-info p {
+    font-size: 0.87rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+  }
+  .medio-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--teal);
+    text-decoration: none;
+  }
+  .medio-link:hover { color: var(--yellow); }
+
+  /* Responsive contenido */
+  @media (max-width: 900px) {
+    .tips-grid, .apps-grid { grid-template-columns: 1fr 1fr; }
+    .libros-grid, .medios-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .tips-grid, .apps-grid, .libros-grid, .medios-grid { grid-template-columns: 1fr; }
+    .cont-tabs { gap: 8px; }
+    .ctab-btn { padding: 10px 16px; font-size: 0.82rem; }
+  }
+
+  /* ─────────────────────────────────────
+     SECTION 10 — ¿CÓMO EMPEZAR?
+  ───────────────────────────────────── */
+  #empezar {
+    background: var(--navy);
+    padding: 100px 8%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #empezar h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    margin-bottom: 70px;
+  }
+
+  .empezar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .empezar-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .empezar-img {
+    width: 180px; height: 180px;
+    background: var(--orange);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    transition: transform 0.3s;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .empezar-card:hover .empezar-img { transform: scale(1.08) rotate(-3deg); }
+
+  .empezar-card h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--blue-light);
+  }
+  .empezar-card p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    line-height: 1.6;
+  }
+
+  /* ─── CONTACTO ─── */
+  #contacto {
+    background: linear-gradient(135deg, #1a2856 0%, #243570 60%, #1a2856 100%);
+    padding: 100px 8% 110px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* background bubble deco */
+  #contacto::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(42,173,168,0.12) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  #contacto::after {
+    content: '';
+    position: absolute;
+    width: 380px; height: 380px;
+    background: radial-gradient(circle, rgba(245,197,24,0.08) 0%, transparent 70%);
+    bottom: -80px; left: -60px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .contact-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 18px;
+    position: relative;
+  }
+
+  #contacto h2 {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  #contacto h2 em {
+    font-style: normal;
+    color: var(--yellow);
+  }
+
+  .contact-desc {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.75;
+    max-width: 560px;
+    margin: 0 auto 52px;
+    position: relative;
+  }
+
+  /* ── CARD ── */
+  .contact-card {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 28px;
+    max-width: 520px;
+    margin: 0 auto 48px;
+    padding: 40px 36px;
+    backdrop-filter: blur(8px);
+    position: relative;
+  }
+
+  .contact-wa-icon {
+    width: 80px; height: 80px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+    animation: pulse-wa 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse-wa {
+    0%, 100% { box-shadow: 0 8px 32px rgba(37,211,102,0.4); }
+    50%       { box-shadow: 0 8px 52px rgba(37,211,102,0.7), 0 0 0 10px rgba(37,211,102,0.1); }
+  }
+
+  .contact-wa-icon svg { width: 44px; height: 44px; }
+
+  .contact-card h3 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .contact-card p {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+
+  .wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #25D366;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    padding: 18px 38px;
+    border-radius: 60px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+  }
+  .wa-btn:hover {
+    background: #1ebe5d;
+    transform: translateY(-4px);
+    box-shadow: 0 16px 44px rgba(37,211,102,0.5);
+  }
+  .wa-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
+
+  .contact-note {
+    margin-top: 18px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ── DIVIDER DOTS ── */
+  .contact-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .contact-divider span {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cdiv-line {
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* ── EXTRA SOCIAL LINKS ── */
+  .contact-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .social-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 50px;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .social-pill:hover {
+    border-color: var(--teal);
+    color: white;
+    background: rgba(42,173,168,0.1);
+  }
+  .social-pill .sp-ico { font-size: 1.1rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #111d45;
+    padding: 40px;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.95rem;
+  }
+  footer span { color: var(--blue-light); font-weight: 700; }
+
+  /* ─── NAV STICKY ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 5%;
+    background: rgba(26, 40, 86, 0.9);
+    backdrop-filter: blur(12px);
+    transform: translateY(-80px);
+    transition: transform 0.4s ease;
+  }
+  nav.visible { transform: translateY(0); }
+  nav .nav-logo { color: var(--blue-light); font-weight: 800; font-size: 1.3rem; }
+  nav .nav-links { display: flex; gap: 12px; }
+  nav .nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 20px;
+    border-radius: 50px;
+    transition: background 0.2s;
+  }
+  nav .nav-link:hover { background: rgba(255,255,255,0.1); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    #que-somos, #proposito, #puntos, #metodologia, #contenido {
+      flex-direction: column;
+    }
+    .bilingual-grid, .empezar-grid {
+      grid-template-columns: 1fr;
+    }
+    .met-decoration { display: none; }
+    .qs-illustration { display: none; }
+  }
+
+
+  /* ─── LANGUAGE TOGGLE BUTTON ─── */
+  #lang-toggle {
+    background: transparent;
+    border: 2px solid rgba(126,206,244,0.6);
+    color: var(--blue-light);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 6px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 6px;
+  }
+  #lang-toggle:hover {
+    background: var(--blue-light);
+    color: var(--navy);
+    border-color: var(--blue-light);
+  }
+  /* delay helpers */
+  .d1 { transition-delay: 0.1s; }
+  .d2 { transition-delay: 0.2s; }
+  .d3 { transition-delay: 0.3s; }
+  .d4 { transition-delay: 0.4s; }
+  .d5 { transition-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <span class="nav-logo">Anglospano</span>
+  <div class="nav-links">
+    <a href="#que-somos" class="nav-link" data-i18n="nav.what">¿Qué somos?</a>
+    <a href="#proposito" class="nav-link" data-i18n="nav.purpose">Propósito</a>
+    <button id="lang-toggle" onclick="toggleLang()" title="Cambiar idioma / Switch language">EN</button>
+    <a href="#empezar" class="nav-link" data-i18n="nav.howto">¿Cómo empezar?</a>
+    <a href="#contacto" class="nav-link" style="background:rgba(37,211,102,0.15);border:1.5px solid rgba(37,211,102,0.4);color:#25D366;border-radius:50px;padding:8px 20px;" data-i18n="nav.contact">📲 Contacto</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <!-- Left column deco -->
+  <div class="hero-left">
+    <div class="hl-semicircle"></div>
+    <div class="hl-semicircle2"></div>
+    <div class="hl-semicircle3"></div>
+    <div class="hl-box"><span class="hl-search">🔍</span></div>
+    <div class="hl-quarter"></div>
+    <div class="hl-stairs"></div>
+  </div>
+
+  <!-- Right column deco -->
+  <div class="hero-right">
+    <div class="hr-stair"></div>
+    <div class="hr-book-wrap">
+      <div class="hr-book"></div>
+    </div>
+    <div class="hr-blue-rect">
+      <div class="hr-triangle-white"></div>
+    </div>
+    <div class="hr-orange-bg">
+      <div class="hr-triangle-orange" style="border-bottom-color: #e07310;"></div>
+    </div>
+    <div class="hr-yellow-arch"></div>
+  </div>
+
+  <h1 class="hero-title">Anglospano</h1>
+
+  <div class="hero-nav">
+    <a href="#que-somos" class="hero-btn btn-orange" data-i18n="nav.what">¿Qué somos?</a>
+    <a href="#proposito" class="hero-btn btn-yellow" data-i18n="nav.purpose">Propósito</a>
+  </div>
+</section>
+
+<!-- ─── ¿QUÉ SOMOS? ─── -->
+<section id="que-somos">
+  <div class="qs-text reveal-left">
+    <h2 data-i18n="qs.title">¿Qué somos?</h2>
+    <p data-i18n="qs.desc">Anglospano es una entidad experta en el aprendizaje y enseñanza del español e inglés como lenguas extranjeras.</p>
+  </div>
+
+  <div class="qs-illustration reveal-right">
+    <div class="qs-svg-wrap">
+
+      <!-- Decorative stars -->
+      <svg class="qs-deco-star s1" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 2 L25.5 16 L40 16 L28.5 25 L33 39 L22 31 L11 39 L15.5 25 L4 16 L18.5 16 Z" fill="#f5c518"/>
+      </svg>
+      <svg class="qs-deco-star s2" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 2 L16.5 10 L25 10 L18.5 15.5 L21 24 L14 19.5 L7 24 L9.5 15.5 L3 10 L11.5 10 Z" fill="#2aada8"/>
+      </svg>
+      <svg class="qs-deco-star s3" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 2 L21 13 L32 13 L23.5 20 L27 31 L18 25 L9 31 L12.5 20 L4 13 L15 13 Z" fill="#f5841f"/>
+      </svg>
+
+      <!-- Main scene SVG -->
+      <svg viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <clipPath id="archClip">
+            <path d="M10 360 L10 190 Q10 10 210 10 Q410 10 410 190 L410 360 Z"/>
+          </clipPath>
+        </defs>
+
+        <!-- Arch background sky -->
+        <path d="M10 360 L10 190 Q10 10 210 10 Q410 10 410 190 L410 360 Z" fill="url(#skyGrad)"/>
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5bb8e8"/>
+            <stop offset="60%" stop-color="#a8d8f0"/>
+            <stop offset="100%" stop-color="#d0edf8"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Clouds -->
+        <ellipse cx="80" cy="80" rx="38" ry="18" fill="white" opacity="0.85"/>
+        <ellipse cx="110" cy="70" rx="28" ry="16" fill="white" opacity="0.85"/>
+        <ellipse cx="60" cy="75" rx="22" ry="14" fill="white" opacity="0.85"/>
+
+        <ellipse cx="300" cy="60" rx="42" ry="18" fill="white" opacity="0.75"/>
+        <ellipse cx="330" cy="50" rx="30" ry="15" fill="white" opacity="0.75"/>
+        <ellipse cx="278" cy="55" rx="24" ry="13" fill="white" opacity="0.75"/>
+
+        <!-- Sun rays (subtle) -->
+        <circle cx="210" cy="55" r="22" fill="#fff7a0" opacity="0.5"/>
+        <circle cx="210" cy="55" r="14" fill="#ffee58" opacity="0.7"/>
+
+        <!-- Green ground base -->
+        <rect x="10" y="295" width="400" height="65" fill="#5aad5a" clip-path="url(#archClip)"/>
+        <ellipse cx="210" cy="295" rx="200" ry="12" fill="#48964a"/>
+
+        <!-- Yellow road / path -->
+        <rect x="170" y="295" width="80" height="65" fill="#f5c518" clip-path="url(#archClip)"/>
+
+        <!-- ══ STATUE OF LIBERTY ══ -->
+        <!-- Base pedestal -->
+        <rect x="82" y="262" width="54" height="35" rx="3" fill="#7a9e8a"/>
+        <rect x="76" y="278" width="66" height="18" rx="2" fill="#6a8e7a"/>
+        <!-- Body / robe -->
+        <path d="M100 140 Q95 175 90 210 Q88 235 85 262 L145 262 Q142 235 140 210 Q135 175 130 140 Z" fill="#8fbfa0"/>
+        <!-- Robe folds -->
+        <line x1="102" y1="145" x2="96" y2="260" stroke="#7aaf90" stroke-width="2.5" opacity="0.7"/>
+        <line x1="115" y1="142" x2="115" y2="262" stroke="#7aaf90" stroke-width="2.5" opacity="0.7"/>
+        <line x1="128" y1="145" x2="134" y2="260" stroke="#7aaf90" stroke-width="2.5" opacity="0.7"/>
+        <!-- Waist belt -->
+        <rect x="88" y="200" width="54" height="7" rx="3" fill="#6a9e80"/>
+        <!-- Shoulder / collar -->
+        <path d="M95 140 Q115 128 135 140 L130 155 Q115 148 100 155 Z" fill="#8fbfa0"/>
+        <!-- Neck -->
+        <rect x="110" y="115" width="10" height="20" rx="4" fill="#c8a882"/>
+        <!-- Head -->
+        <ellipse cx="115" cy="108" rx="14" ry="15" fill="#c8a882"/>
+        <!-- Face features -->
+        <ellipse cx="111" cy="106" rx="2" ry="2.5" fill="#8a6850"/>
+        <ellipse cx="119" cy="106" rx="2" ry="2.5" fill="#8a6850"/>
+        <path d="M111 114 Q115 117 119 114" stroke="#8a6850" stroke-width="1.5" fill="none"/>
+        <!-- Crown spikes -->
+        <polygon points="105,90 108,78 111,90" fill="#b8963a"/>
+        <polygon points="111,87 115,73 119,87" fill="#c8a840"/>
+        <polygon points="119,90 122,78 125,90" fill="#b8963a"/>
+        <polygon points="100,93 103,82 107,94" fill="#b8963a"/>
+        <polygon points="123,94 127,82 130,93" fill="#b8963a"/>
+        <!-- Crown band -->
+        <rect x="100" y="90" width="30" height="10" rx="5" fill="#c8a840"/>
+        <!-- Torch arm -->
+        <line x1="135" y1="150" x2="155" y2="100" stroke="#b4a080" stroke-width="7" stroke-linecap="round"/>
+        <!-- Torch -->
+        <rect x="148" y="82" width="12" height="22" rx="5" fill="#c8a840"/>
+        <ellipse cx="154" cy="80" rx="8" ry="5" fill="#ffcc00"/>
+        <!-- Flame -->
+        <path d="M151 80 Q150 68 154 62 Q158 68 157 80 Z" fill="#ff9800"/>
+        <path d="M153 80 Q151 72 154 66 Q157 72 155 80 Z" fill="#ffcc00"/>
+        <!-- Book / tablet arm -->
+        <line x1="97" y1="155" x2="80" y2="190" stroke="#b4a080" stroke-width="7" stroke-linecap="round"/>
+        <rect x="64" y="185" width="32" height="22" rx="3" fill="#9ab89a"/>
+        <!-- Lines on tablet -->
+        <line x1="68" y1="191" x2="92" y2="191" stroke="#6a8a6a" stroke-width="1.5"/>
+        <line x1="68" y1="197" x2="92" y2="197" stroke="#6a8a6a" stroke-width="1.5"/>
+        <line x1="68" y1="203" x2="88" y2="203" stroke="#6a8a6a" stroke-width="1.5"/>
+
+        <!-- Speech bubble "Hello!" -->
+        <rect x="142" y="95" width="78" height="34" rx="12" fill="white" opacity="0.95"/>
+        <polygon points="152,129 148,143 164,129" fill="white" opacity="0.95"/>
+        <text x="181" y="118" text-anchor="middle" font-family="Nunito,sans-serif" font-size="16" font-weight="800" fill="#1a2856">Hello! 👋</text>
+
+        <!-- ══ BIG BEN ══ -->
+        <!-- Tower base -->
+        <rect x="292" y="180" width="52" height="120" rx="2" fill="#c8b97a"/>
+        <!-- Tower body with detail lines -->
+        <rect x="296" y="185" width="44" height="110" rx="1" fill="#d4c886"/>
+        <!-- Gothic window arches -->
+        <path d="M300 200 Q308 192 316 200 L316 215 L300 215 Z" fill="#9a8a50" opacity="0.4"/>
+        <path d="M320 200 Q328 192 336 200 L336 215 L320 215 Z" fill="#9a8a50" opacity="0.4"/>
+        <path d="M300 230 Q308 222 316 230 L316 245 L300 245 Z" fill="#9a8a50" opacity="0.4"/>
+        <path d="M320 230 Q328 222 336 230 L336 245 L320 245 Z" fill="#9a8a50" opacity="0.4"/>
+        <!-- Tower decorative bands -->
+        <rect x="292" y="178" width="52" height="6" rx="1" fill="#a89848"/>
+        <rect x="288" y="182" width="60" height="5" rx="1" fill="#b8a858"/>
+        <!-- Clock tower section -->
+        <rect x="285" y="125" width="66" height="58" rx="4" fill="#b8a858"/>
+        <!-- Corner decorations -->
+        <rect x="282" y="122" width="8" height="62" rx="3" fill="#c8b868"/>
+        <rect x="346" y="122" width="8" height="62" rx="3" fill="#c8b868"/>
+        <!-- Clock face -->
+        <circle cx="318" cy="152" r="22" fill="#e8e0c0" stroke="#8a7838" stroke-width="3"/>
+        <circle cx="318" cy="152" r="18" fill="#f0e8c8" stroke="#a89848" stroke-width="1.5"/>
+        <!-- Clock hands -->
+        <line x1="318" y1="152" x2="318" y2="137" stroke="#2a2010" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="318" y1="152" x2="330" y2="158" stroke="#2a2010" stroke-width="2" stroke-linecap="round"/>
+        <!-- Clock numerals (dots) -->
+        <circle cx="318" cy="136" r="1.5" fill="#5a4a20"/>
+        <circle cx="318" cy="168" r="1.5" fill="#5a4a20"/>
+        <circle cx="302" cy="152" r="1.5" fill="#5a4a20"/>
+        <circle cx="334" cy="152" r="1.5" fill="#5a4a20"/>
+        <!-- Decorative top bands on clock -->
+        <rect x="285" y="120" width="66" height="6" rx="2" fill="#a89840"/>
+        <!-- Spire -->
+        <polygon points="318,30 308,122 328,122" fill="#c8b858"/>
+        <polygon points="318,30 311,80 325,80" fill="#d4c468"/>
+        <!-- Flag at top -->
+        <line x1="318" y1="28" x2="318" y2="8" stroke="#8a7830" stroke-width="2"/>
+        <rect x="318" y="8" width="18" height="12" fill="#c8102e"/>
+        <line x1="321" y1="14" x2="336" y2="14" stroke="white" stroke-width="1.5"/>
+        <line x1="328" y1="8" x2="328" y2="20" stroke="white" stroke-width="1.5"/>
+
+        <!-- Speech bubble "¡Hola!" -->
+        <rect x="200" y="95" width="80" height="34" rx="12" fill="#1a2856" opacity="0.9"/>
+        <polygon points="262,129 274,143 268,129" fill="#1a2856" opacity="0.9"/>
+        <text x="240" y="118" text-anchor="middle" font-family="Nunito,sans-serif" font-size="15" font-weight="800" fill="#7ecef4">¡Hola! 🌎</text>
+
+        <!-- Yellow ground strip -->
+        <rect x="10" y="295" width="400" height="30" fill="#f5c518" clip-path="url(#archClip)" opacity="0.9"/>
+
+        <!-- Arch border -->
+        <path d="M10 360 L10 190 Q10 10 210 10 Q410 10 410 190 L410 360 Z" fill="none" stroke="#1a2856" stroke-width="6"/>
+
+        <!-- Language flags subtle -->
+        <rect x="28" y="300" width="28" height="18" rx="2" fill="#B22234"/>
+        <rect x="28" y="300" width="28" height="6" fill="#B22234"/>
+        <rect x="28" y="306" width="28" height="6" fill="white"/>
+        <rect x="28" y="312" width="28" height="6" fill="#B22234"/>
+        <rect x="360" y="300" width="28" height="18" rx="2" fill="#012169"/>
+        <line x1="360" y1="300" x2="388" y2="318" stroke="white" stroke-width="3"/>
+        <line x1="388" y1="300" x2="360" y2="318" stroke="white" stroke-width="3"/>
+        <line x1="374" y1="300" x2="374" y2="318" stroke="white" stroke-width="3"/>
+        <line x1="360" y1="309" x2="388" y2="309" stroke="white" stroke-width="3"/>
+        <line x1="360" y1="300" x2="388" y2="318" stroke="#C8102E" stroke-width="1.5"/>
+        <line x1="388" y1="300" x2="360" y2="318" stroke="#C8102E" stroke-width="1.5"/>
+        <line x1="374" y1="300" x2="374" y2="318" stroke="#C8102E" stroke-width="2"/>
+        <line x1="360" y1="309" x2="388" y2="309" stroke="#C8102E" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROPÓSITO ─── -->
+<section id="proposito">
+  <div class="prop-text reveal-left">
+    <h2 data-i18n="nav.purpose">Propósito</h2>
+    <p data-i18n="prop.desc">Estamos deseosos de motivar a los próximos <em>"subordinate bilinguals"</em> a convertirse en bilingües 100% autodidactas.</p>
+  </div>
+
+  <div class="prop-illustration reveal-right">
+    <div class="prop-svg-wrap">
+
+      <!-- Star deco top -->
+      <svg class="prop-deco star1" width="52" height="52" viewBox="0 0 52 52" fill="none">
+        <path d="M26 2 L30 19 L48 19 L34 30 L39 47 L26 37 L13 47 L18 30 L4 19 L22 19 Z" fill="#85c7f2"/>
+      </svg>
+
+      <!-- Starburst deco bottom-right -->
+      <svg class="prop-deco burst" width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <path d="M40 2 L44 18 L58 8 L52 24 L70 22 L58 34 L74 42 L58 46 L66 62 L50 56 L48 74 L40 60 L32 74 L30 56 L14 62 L22 46 L6 42 L22 34 L10 22 L28 24 L22 8 L36 18 Z" fill="#1a2856"/>
+      </svg>
+
+      <!-- Main SVG -->
+      <svg viewBox="0 0 420 380" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="propBg" x1="0" y1="0" x2="0.3" y2="1">
+            <stop offset="0%" stop-color="#f0ebe4"/>
+            <stop offset="100%" stop-color="#e8e0d4"/>
+          </linearGradient>
+          <linearGradient id="skinGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f5c8a0"/>
+            <stop offset="100%" stop-color="#e8a870"/>
+          </linearGradient>
+          <linearGradient id="bookSpine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a5080"/>
+            <stop offset="100%" stop-color="#2a6aaa"/>
+          </linearGradient>
+          <linearGradient id="tableGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#d4a870"/>
+            <stop offset="100%" stop-color="#b88850"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Background arch shape -->
+        <path d="M20 380 L20 200 Q20 20 210 20 Q400 20 400 200 L400 380 Z" fill="url(#propBg)"/>
+        <path d="M20 380 L20 200 Q20 20 210 20 Q400 20 400 200 L400 380 Z" fill="none" stroke="#1a2856" stroke-width="5"/>
+
+        <!-- Desk / table -->
+        <rect x="60" y="285" width="300" height="18" rx="5" fill="url(#tableGrad)"/>
+        <rect x="60" y="303" width="14" height="55" rx="4" fill="#b88850"/>
+        <rect x="346" y="303" width="14" height="55" rx="4" fill="#b88850"/>
+        <!-- Table edge highlight -->
+        <rect x="60" y="285" width="300" height="5" rx="3" fill="#e4b870" opacity="0.7"/>
+
+        <!-- ── STACK OF BOOKS on desk ── -->
+        <!-- Book 4 (bottom) -->
+        <rect x="240" y="253" width="95" height="18" rx="3" fill="#c8102e"/>
+        <rect x="240" y="253" width="10" height="18" rx="2" fill="#a00020"/>
+        <text x="288" y="266" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" font-weight="700" fill="white" opacity="0.9">GRAMMAR</text>
+        <!-- Book 3 -->
+        <rect x="244" y="236" width="88" height="18" rx="3" fill="#2aada8"/>
+        <rect x="244" y="236" width="10" height="18" rx="2" fill="#1a8d88"/>
+        <text x="288" y="249" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" font-weight="700" fill="white" opacity="0.9">FLUENCY</text>
+        <!-- Book 2 -->
+        <rect x="248" y="219" width="82" height="18" rx="3" fill="#f5841f"/>
+        <rect x="248" y="219" width="10" height="18" rx="2" fill="#d56800"/>
+        <text x="289" y="232" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" font-weight="700" fill="white" opacity="0.9">VOCABULARY</text>
+        <!-- Book 1 (top) open slightly -->
+        <rect x="252" y="205" width="75" height="16" rx="3" fill="#f5c518"/>
+        <rect x="252" y="205" width="10" height="16" rx="2" fill="#d4a800"/>
+        <text x="289" y="217" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" font-weight="700" fill="#1a2856" opacity="0.9">ENGLISH ★</text>
+
+        <!-- ── OPEN BOOK on desk ── -->
+        <!-- Left page -->
+        <path d="M85 222 Q130 215 165 222 L165 282 Q130 276 85 282 Z" fill="#fafaf5" stroke="#ccc" stroke-width="1"/>
+        <!-- Right page -->
+        <path d="M165 222 Q200 215 245 222 L245 282 Q200 276 165 282 Z" fill="#f5f5ee" stroke="#ccc" stroke-width="1"/>
+        <!-- Spine crease -->
+        <line x1="165" y1="218" x2="165" y2="284" stroke="#bbb" stroke-width="2"/>
+        <!-- Book shadow bottom -->
+        <path d="M85 282 Q165 290 245 282" stroke="#ccc" stroke-width="2" fill="none"/>
+        <!-- Text lines left page -->
+        <line x1="98" y1="234" x2="155" y2="234" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="98" y1="241" x2="155" y2="241" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="98" y1="248" x2="148" y2="248" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="98" y1="255" x2="155" y2="255" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="98" y1="262" x2="145" y2="262" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="98" y1="269" x2="155" y2="269" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <!-- Small illustration on left page -->
+        <circle cx="127" cy="240" r="4" fill="#f5c518" opacity="0.5"/>
+        <!-- Text lines right page -->
+        <line x1="178" y1="234" x2="235" y2="234" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="178" y1="241" x2="232" y2="241" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="178" y1="248" x2="235" y2="248" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="178" y1="255" x2="228" y2="255" stroke="#2aada8" stroke-width="2" opacity="0.7"/>
+        <line x1="178" y1="262" x2="235" y2="262" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <line x1="178" y1="269" x2="230" y2="269" stroke="#aaa" stroke-width="1.5" opacity="0.6"/>
+        <!-- Highlighted text on right page -->
+        <rect x="178" y="252" width="50" height="7" rx="2" fill="#f5c518" opacity="0.35"/>
+
+        <!-- ── PERSON SITTING ── -->
+        <!-- Chair -->
+        <rect x="150" y="285" width="90" height="8" rx="4" fill="#8a7050"/>
+        <rect x="155" y="293" width="8" height="45" rx="3" fill="#7a6040"/>
+        <rect x="227" y="293" width="8" height="45" rx="3" fill="#7a6040"/>
+        <rect x="150" y="285" width="8" height="50" rx="3" fill="#8a7050"/>
+        <rect x="232" y="285" width="8" height="50" rx="3" fill="#8a7050"/>
+
+        <!-- Legs -->
+        <rect x="163" y="285" width="16" height="45" rx="8" fill="#3a5090"/>
+        <rect x="211" y="285" width="16" height="45" rx="8" fill="#3a5090"/>
+        <!-- Shoes -->
+        <ellipse cx="171" cy="332" rx="12" ry="6" fill="#2a2a2a"/>
+        <ellipse cx="219" cy="332" rx="12" ry="6" fill="#2a2a2a"/>
+
+        <!-- Torso / shirt -->
+        <path d="M168 175 Q165 200 160 230 Q158 255 160 285 L230 285 Q232 255 230 230 Q225 200 222 175 Z" fill="#4a70d0"/>
+        <!-- Shirt collar -->
+        <path d="M185 175 Q195 182 205 175 Q205 188 195 192 Q185 188 185 175 Z" fill="#3a5ab0"/>
+        <!-- Shirt sleeve left -->
+        <path d="M168 185 Q148 195 138 220 Q135 230 140 235 Q150 225 158 210 L165 195 Z" fill="#4a70d0"/>
+        <!-- Sleeve cuff left -->
+        <ellipse cx="140" cy="235" rx="10" ry="5" fill="#3a5ab0"/>
+        <!-- Hand left (on book) -->
+        <ellipse cx="132" cy="243" rx="12" ry="8" fill="url(#skinGrad)"/>
+        <!-- Fingers left -->
+        <path d="M125 240 Q122 234 126 232 Q130 236 128 242" fill="url(#skinGrad)"/>
+        <path d="M120 242 Q117 236 121 234 Q125 238 123 244" fill="url(#skinGrad)"/>
+
+        <!-- Shirt sleeve right -->
+        <path d="M222 185 Q242 195 252 220 Q255 230 250 235 Q240 225 232 210 L225 195 Z" fill="#4a70d0"/>
+        <!-- Sleeve cuff right -->
+        <ellipse cx="250" cy="235" rx="10" ry="5" fill="#3a5ab0"/>
+        <!-- Hand right (pointing at book) -->
+        <ellipse cx="258" cy="243" rx="12" ry="8" fill="url(#skinGrad)"/>
+        <!-- Finger pointing -->
+        <path d="M264 237 Q270 235 272 240 Q270 245 264 244" fill="url(#skinGrad)"/>
+
+        <!-- Neck -->
+        <rect x="188" y="150" width="14" height="26" rx="6" fill="url(#skinGrad)"/>
+
+        <!-- Head -->
+        <ellipse cx="195" cy="135" rx="28" ry="30" fill="url(#skinGrad)"/>
+        <!-- Hair -->
+        <path d="M167 122 Q168 95 195 92 Q222 95 223 122 Q218 108 195 106 Q172 108 167 122 Z" fill="#3a2010"/>
+        <!-- Hair detail -->
+        <path d="M168 118 Q172 104 185 100" stroke="#2a1808" stroke-width="2" fill="none" opacity="0.5"/>
+        <path d="M222 118 Q218 104 205 100" stroke="#2a1808" stroke-width="2" fill="none" opacity="0.5"/>
+        <!-- Ear left -->
+        <ellipse cx="167" cy="135" rx="5" ry="7" fill="#e8a870"/>
+        <!-- Ear right -->
+        <ellipse cx="223" cy="135" rx="5" ry="7" fill="#e8a870"/>
+        <!-- Eyes -->
+        <ellipse cx="184" cy="133" rx="5" ry="5.5" fill="white"/>
+        <ellipse cx="206" cy="133" rx="5" ry="5.5" fill="white"/>
+        <ellipse cx="185" cy="134" rx="3.5" ry="4" fill="#3a2010"/>
+        <ellipse cx="207" cy="134" rx="3.5" ry="4" fill="#3a2010"/>
+        <!-- Eye shine -->
+        <circle cx="186" cy="132" r="1.2" fill="white"/>
+        <circle cx="208" cy="132" r="1.2" fill="white"/>
+        <!-- Eyebrows -->
+        <path d="M178 125 Q184 121 190 124" stroke="#3a2010" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M200 124 Q206 121 212 125" stroke="#3a2010" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Nose -->
+        <path d="M192 140 Q195 145 198 140" stroke="#c8905a" stroke-width="1.5" fill="none"/>
+        <!-- Smile -->
+        <path d="M186 149 Q195 156 204 149" stroke="#c8905a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Cheek blush -->
+        <ellipse cx="178" cy="147" rx="6" ry="3.5" fill="#f5a0a0" opacity="0.35"/>
+        <ellipse cx="212" cy="147" rx="6" ry="3.5" fill="#f5a0a0" opacity="0.35"/>
+
+        <!-- ── THOUGHT BUBBLES / IDEAS ── -->
+        <!-- Bubble dots leading up -->
+        <circle cx="240" cy="115" r="4" fill="#f5c518" opacity="0.7"/>
+        <circle cx="255" cy="100" r="6" fill="#f5c518" opacity="0.8"/>
+        <circle cx="265" cy="82" r="8" fill="#f5c518" opacity="0.85"/>
+
+        <!-- Light bulb -->
+        <circle cx="282" cy="58" r="22" fill="#fff9c4" stroke="#f5c518" stroke-width="3"/>
+        <circle cx="282" cy="58" r="16" fill="#ffee58" opacity="0.8"/>
+        <!-- Filament -->
+        <path d="M276 62 Q282 52 288 62" stroke="#f59300" stroke-width="2" fill="none"/>
+        <path d="M274 66 L276 62" stroke="#f59300" stroke-width="2"/>
+        <path d="M290 66 L288 62" stroke="#f59300" stroke-width="2"/>
+        <rect x="277" y="66" width="10" height="5" rx="2" fill="#f59300" opacity="0.7"/>
+        <!-- Glow rays -->
+        <line x1="282" y1="30" x2="282" y2="22" stroke="#f5c518" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <line x1="259" y1="36" x2="253" y2="30" stroke="#f5c518" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <line x1="305" y1="36" x2="311" y2="30" stroke="#f5c518" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <line x1="250" y1="58" x2="242" y2="58" stroke="#f5c518" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <line x1="314" y1="58" x2="322" y2="58" stroke="#f5c518" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+
+        <!-- Small floating words (language) -->
+        <rect x="38" y="140" width="72" height="26" rx="13" fill="#2aada8" opacity="0.9"/>
+        <text x="74" y="158" text-anchor="middle" font-family="Nunito,sans-serif" font-size="11" font-weight="800" fill="white">autodidacta ✓</text>
+
+        <rect x="310" y="170" width="72" height="26" rx="13" fill="#f5841f" opacity="0.9"/>
+        <text x="346" y="188" text-anchor="middle" font-family="Nunito,sans-serif" font-size="11" font-weight="800" fill="white">bilingual 🌎</text>
+
+        <rect x="45" y="200" width="64" height="26" rx="13" fill="#1a2856" opacity="0.85"/>
+        <text x="77" y="218" text-anchor="middle" font-family="Nunito,sans-serif" font-size="11" font-weight="800" fill="#7ecef4">fluency ★</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SUBORDINATE BILINGUAL ─── -->
+<section id="bilingual">
+  <div class="sub-starburst">
+    <div class="sub-half"></div>
+    <div class="sub-half"></div>
+    <div class="sub-half"></div>
+  </div>
+
+  <h2 class="reveal" data-i18n-html="bil.title">¿Conoces el término <br>"subordinate bilingual"?</h2>
+  <p class="sub-subtitle reveal d1" data-i18n="bil.subtitle">observa la comparación</p>
+
+  <div class="bilingual-grid">
+    <div class="bilingual-card reveal d1">
+      <div class="bc-header">compound</div>
+      <div class="bc-body" data-i18n="bil.compound">Gabriela es hija de Juan, un inmigrante colombiano, y de Monica quien es una mujer estadounidense. En casa aprende a comunicarse en inglés y español.</div>
+    </div>
+    <div class="bilingual-card reveal d2">
+      <div class="bc-header">subordinate</div>
+      <div class="bc-body" data-i18n="bil.subordinate">Daniela es una mujer adulta hispanohablante pero actualmente se encuentra aprendiendo inglés en un curso tradicional.</div>
+    </div>
+    <div class="bilingual-card reveal d3">
+      <div class="bc-header">coordinate</div>
+      <div class="bc-body" data-i18n="bil.coordinate">Jhon es un niño latino, él y su familia migraron hace un año a estados unidos. Jhon aprendió a comunicarse en inglés con sus compañeros.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PUNTOS PRINCIPALES ─── -->
+<section id="puntos">
+
+  <div class="puntos-top">
+    <!-- izquierda: título + personaje -->
+    <div class="puntos-left reveal-left">
+      <h2 data-i18n-html="puntos.title">Puntos<br>principales</h2>
+      <span class="puntos-character">🧑</span>
+    </div>
+
+    <!-- derecha: hook / texto de anclaje -->
+    <div class="puntos-hook reveal-right">
+      <span class="hook-badge" data-i18n="puntos.badge">¿Por qué la mayoría fracasa?</span>
+      <h3 data-i18n-html="puntos.hook">
+        El internet está lleno de contenido.<br>
+        Pero aprender inglés no es cuestión de<br>
+        <em>consumir más</em> — es cuestión de<br>
+        <em>elegir mejor</em>.
+      </h3>
+      <p data-i18n-html="puntos.desc">
+        El 80 % de quienes intentan aprender inglés de forma autodidacta abandonan 
+        antes de los seis meses. No porque les falte inteligencia ni tiempo: 
+        les falta un <strong>mapa claro</strong>. En Anglospano filtramos miles de 
+        horas de contenido gratuito y de pago para darte exactamente lo que 
+        necesitas — dependiendo de tu punto de partida y tu estilo de aprendizaje.
+      </p>
+    </div>
+  </div>
+
+  <!-- cards clicables -->
+  <div class="puntos-items">
+    <a href="#metodologia" class="punto-item reveal d1">
+      <span class="punto-icon">💡</span>
+      <h4 data-i18n="puntos.met.title">Metodología de aprendizaje</h4>
+      <p data-i18n="puntos.met.desc">Un sistema de 4 pasos basado en lingüística aplicada para avanzar de forma consistente y medible.</p>
+    </a>
+    <a href="#contenido" class="punto-item reveal d2">
+      <span class="punto-icon">📣</span>
+      <h4 data-i18n="puntos.cont.title">Contenido de valor</h4>
+      <p data-i18n="puntos.cont.desc">Tips, libros, apps y recursos digitales curados por expertos. Solo lo que realmente funciona.</p>
+    </a>
+
+  </div>
+
+</section>
+
+<!-- ─── METODOLOGÍA ─── -->
+<section id="metodologia">
+
+  <!-- encabezado + hook callout -->
+  <div class="met-header reveal">
+    <span class="met-label" data-i18n="met.label">📐 Tu sistema personalizado</span>
+    <h2 data-i18n="puntos.met.title">Metodología de aprendizaje</h2>
+
+    <div class="met-callout">
+      <span class="callout-icon">🧠</span>
+      <div class="callout-text">
+        <strong data-i18n-html="met.callout.title">¿Por qué el inglés se te escapa aunque llevas años estudiándolo?</strong>
+        <p data-i18n-html="met.callout.body">
+          Los adultos hispanohablantes no adquieren el inglés como lo hicieron con el español de niños. 
+          Tu cerebro ya tiene un sistema gramatical instalado — el español — y <span>filtra el inglés a través de él</span>. 
+          Eso genera interferencias reales: confundes el orden de las palabras, omites el auxiliar en preguntas, 
+          y traducir mentalmente te frena. La escucha pasiva sola te da bilingüismo receptivo: entiendes, 
+          pero no produces. Para dominar la gramática inglesa necesitas <span>estudio explícito más práctica de output</span> — 
+          exactamente lo que esta metodología combina.
+        </p>
+      </div>
+    </div>
+
+    <p class="met-desc" data-i18n="met.desc">
+      No se trata de escuchar más horas y esperar que el inglés "se pegue". 
+      El adulto hispanohablante necesita entender la gramática inglesa de forma explícita 
+      — las estructuras que el español nunca te enseñó — y luego activarlas con práctica real de output. 
+      Estos cuatro pasos combinan ambas cosas: estudio dirigido e inmersión productiva.
+    </p>
+  </div>
+
+  <!-- acordeón de 4 pasos -->
+  <div class="met-accordion">
+
+    <!-- PASO 1 -->
+    <div class="acc-item reveal d1" id="acc1">
+      <div class="acc-header" onclick="toggleAcc('acc1')">
+        <div class="acc-num">1</div>
+        <div class="acc-header-text">
+          <h4 data-i18n="acc1.title">Escoge los materiales adecuados</h4>
+          <span data-i18n="acc1.sub">El contenido correcto en el nivel correcto cambia todo</span>
+        </div>
+        <span class="acc-emoji">📚</span>
+        <span class="acc-arrow">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-intro-box" data-i18n-html="acc1.intro">
+          La hipótesis del output de Merrill Swain propone que <strong>producir</strong> el idioma 
+          — hablarlo y escribirlo — es tan esencial como consumirlo. Cuando intentas expresarte, 
+          tu cerebro detecta con precisión los vacíos entre lo que quieres decir y lo que realmente puedes decir. 
+          Esa brecha es el motor del aprendizaje real, y es la razón por la que consumir contenido sin producir 
+          nada te deja permanentemente en el nivel "lo entiendo pero no puedo hablarlo".
+        </div>
+        <div class="acc-grid">
+          <div class="acc-mini-card">
+            <h5 data-i18n="acc1.yes.title">✅ Lo que SÍ funciona</h5>
+            <ul>
+              <li data-i18n="acc1.yes.1">Series y podcasts en tu nivel (i+1)</li>
+              <li data-i18n="acc1.yes.2">Lectura extensiva con diccionario</li>
+              <li data-i18n="acc1.yes.3">Canciones con letra visible</li>
+              <li data-i18n="acc1.yes.4">YouTube con subtítulos en inglés</li>
+            </ul>
+          </div>
+          <div class="acc-mini-card">
+            <h5 data-i18n="acc1.no.title">❌ Lo que NO funciona</h5>
+            <ul>
+              <li data-i18n="acc1.no.1">Gramática pura sin contexto real</li>
+              <li data-i18n="acc1.no.2">Traducción palabra por palabra</li>
+              <li data-i18n="acc1.no.3">Apps de 5 minutos al día sin inmersión</li>
+              <li data-i18n="acc1.no.4">Contenido 100 % en español sobre inglés</li>
+            </ul>
+          </div>
+        </div>
+        <div class="acc-tip">
+          <span class="acc-tip-icon">💡</span>
+          <span data-i18n-html="acc1.tip">Elige materiales que te <strong>obliguen a producir</strong>: podcasts con preguntas al final, 
+          series con las que puedas practicar shadowing, o libros sencillos que puedas resumir 
+          en voz alta. El output — aunque sea imperfecto — activa el mecanismo de aprendizaje 
+          que Swain identificó. <em>Bluey</em> o <em>English Learning for Curious Minds</em> 
+          son buenos puntos de entrada para practicar escucha activa + repetición oral.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 2 -->
+    <div class="acc-item reveal d2" id="acc2">
+      <div class="acc-header" onclick="toggleAcc('acc2')">
+        <div class="acc-num">2</div>
+        <div class="acc-header-text">
+          <h4 data-i18n="acc2.title">Aprende las disciplinas lingüísticas</h4>
+          <span data-i18n="acc2.sub">El idioma no es solo vocabulario — tiene 5 pilares</span>
+        </div>
+        <span class="acc-emoji">🔬</span>
+        <span class="acc-arrow">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-intro-box" data-i18n="acc2.intro">
+          Un idioma tiene cinco disciplinas que trabajan juntas. Muchos estudiantes 
+          solo se enfocan en gramática y vocabulario, ignorando las demás. 
+          El resultado: entienden, pero no pueden hablar. Conocer las cinco 
+          te permite identificar dónde está tu cuello de botella real.
+        </div>
+        <div class="acc-grid">
+          <div class="acc-mini-card">
+            <h5 data-i18n="acc2.pillars.title">🧩 Los 5 pilares</h5>
+            <ul>
+              <li data-i18n="acc2.p1">Vocabulario (léxico activo y pasivo)</li>
+              <li data-i18n="acc2.p2">Gramática (estructura y sintaxis)</li>
+              <li data-i18n="acc2.p3">Pronunciación (fonología)</li>
+              <li data-i18n="acc2.p4">Fluidez (velocidad de procesamiento)</li>
+              <li data-i18n="acc2.p5">Pragmática (uso social del idioma)</li>
+            </ul>
+          </div>
+          <div class="acc-mini-card">
+            <h5 data-i18n="acc2.which.title">📊 ¿Cuál trabajar primero?</h5>
+            <ul>
+              <li data-i18n="acc2.w1">Principiante → Vocabulario + escucha</li>
+              <li data-i18n="acc2.w2">Intermedio → Fluidez + gramática en uso</li>
+              <li data-i18n="acc2.w3">Avanzado → Pragmática + pronunciación</li>
+              <li data-i18n="acc2.w4">Todos → Producción diaria (hablar/escribir)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="acc-tip">
+          <span class="acc-tip-icon">💡</span>
+          <span data-i18n-html="acc2.tip">El vocabulario tiene el mayor ROI al inicio: 
+          con solo las <strong>1,000 palabras más frecuentes del inglés</strong> 
+          entiendes el 85 % de una conversación casual. Prioriza ahí antes de 
+          invertir tiempo en gramática compleja.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 3 -->
+    <div class="acc-item reveal d3" id="acc3">
+      <div class="acc-header" onclick="toggleAcc('acc3')">
+        <div class="acc-num">3</div>
+        <div class="acc-header-text">
+          <h4 data-i18n="acc3.title">Práctica intensiva</h4>
+          <span data-i18n="acc3.sub">La consistencia supera a la intensidad esporádica</span>
+        </div>
+        <span class="acc-emoji">🏋️</span>
+        <span class="acc-arrow">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-intro-box" data-i18n-html="acc3.intro">
+          El cerebro consolida el aprendizaje durante el sueño y a través de la 
+          repetición espaciada. No necesitas 4 horas al día — necesitas 
+          <strong>30–60 minutos diarios sin interrupciones</strong>, durante al menos 
+          6 meses. La neurociencia llama a esto "deliberate practice": 
+          práctica intencional con retroalimentación inmediata.
+        </div>
+        <div class="acc-grid">
+          <div class="acc-mini-card">
+            <h5 data-i18n="acc3.r.title">⏱️ Rutina mínima viable</h5>
+            <ul>
+              <li data-i18n="acc3.r1">15 min — repaso con Anki (flashcards)</li>
+              <li data-i18n="acc3.r2">20 min — escucha activa (podcast/serie)</li>
+              <li data-i18n="acc3.r3">10 min — producción oral (shadowing)</li>
+              <li data-i18n="acc3.r4">10 min — escritura libre en inglés</li>
+            </ul>
+          </div>
+          <div class="acc-mini-card">
+            <h5 data-i18n="acc3.t.title">🎯 Técnicas de alta efectividad</h5>
+            <ul>
+              <li data-i18n="acc3.t1">Shadowing (imitar al hablante nativo)</li>
+              <li data-i18n="acc3.t2">Repetición espaciada (SRS)</li>
+              <li data-i18n="acc3.t3">Immersion total (solo inglés en el celu)</li>
+              <li data-i18n="acc3.t4">Diario de aprendizaje en inglés</li>
+            </ul>
+          </div>
+        </div>
+        <div class="acc-tip">
+          <span class="acc-tip-icon">💡</span>
+          <span data-i18n-html="acc3.tip">Cambia el idioma de tu teléfono a inglés hoy mismo. 
+          Es gratis, toma 30 segundos y crea <strong>200–400 microexposiciones diarias</strong> 
+          al idioma sin esfuerzo consciente. Pequeña acción, gran impacto acumulado.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 4 -->
+    <div class="acc-item reveal d4" id="acc4">
+      <div class="acc-header" onclick="toggleAcc('acc4')">
+        <div class="acc-num">4</div>
+        <div class="acc-header-text">
+          <h4 data-i18n="acc4.title">Apoyo en tecnología</h4>
+          <span data-i18n="acc4.sub">Las herramientas correctas multiplican tu progreso</span>
+        </div>
+        <span class="acc-emoji">🤖</span>
+        <span class="acc-arrow">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-intro-box" data-i18n="acc4.intro">
+          Vivimos en la era de oro del aprendizaje autodidacta. Nunca antes un 
+          aprendiz tuvo acceso a tutor nativo virtual, corrector de pronunciación 
+          en tiempo real y millones de horas de contenido auténtico — 
+          todo desde el celular. El truco es saber cuáles herramientas 
+          usar y para qué etapa.
+        </div>
+        <div class="acc-grid">
+          <div class="acc-mini-card">
+            <h5 data-i18n="acc4.stack.title">🛠️ Stack recomendado</h5>
+            <ul>
+              <li>Anki — flashcards con SRS</li>
+              <li>Language Reactor — subtítulos dobles</li>
+              <li>Speechling — pronunciación con feedback</li>
+              <li>ChatGPT / Claude — conversación 24/7</li>
+            </ul>
+          </div>
+          <div class="acc-mini-card">
+            <h5 data-i18n="acc4.apps.title">📱 Apps de inmersión</h5>
+            <ul>
+              <li>Readlang — leer en inglés + flashcards</li>
+              <li>Pimsleur — método oral comprobado</li>
+              <li>italki — profesores a $5–15 USD/hora</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /met-accordion -->
+
+</section>
+
+<!-- ─── CONTENIDO DE VALOR ─── -->
+<section id="contenido">
+
+  <div class="cont-header reveal">
+    <h2 data-i18n="cont.title">Contenido de Valor</h2>
+    <p data-i18n="cont.desc">Todo lo que necesitas para avanzar, filtrado y organizado por expertos. 
+      Nada de relleno: solo recursos que han demostrado resultados reales 
+      en el camino al bilingüismo autodidacta.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="cont-tabs reveal d1">
+    <button class="ctab-btn active" onclick="switchTab('tips', this)">
+      <span class="tb-ico">💡</span> <span data-i18n="tab.tips">Tips de aprendizaje</span>
+    </button>
+    <button class="ctab-btn" onclick="switchTab('libros', this)">
+      <span class="tb-ico">📚</span> <span data-i18n="tab.books">Libros</span>
+    </button>
+    <button class="ctab-btn" onclick="switchTab('apps', this)">
+      <span class="tb-ico">📱</span> <span data-i18n="tab.apps">Apps y herramientas</span>
+    </button>
+    <button class="ctab-btn" onclick="switchTab('medios', this)">
+      <span class="tb-ico">🎙️</span> <span data-i18n="tab.media">Medios digitales</span>
+    </button>
+  </div>
+
+  <!-- PANEL: TIPS -->
+  <div class="cont-panel active" id="panel-tips">
+    <div class="tips-grid">
+
+      <div class="tip-card" onclick="toggleTip(this)">
+        <div class="tip-card-header">
+          <div class="tip-num">1</div>
+          <h4 data-i18n="tip1.title">Cambia el idioma de tu teléfono</h4>
+          <span class="tip-toggle">▾</span>
+        </div>
+        <div class="tip-body">
+          <p data-i18n="tip1.p1">Este simple cambio genera entre 200 y 400 microexposiciones diarias al inglés sin ningún esfuerzo consciente. Tu cerebro procesa el vocabulario de interfaz repetitivo (Settings, Save, Share, Search) y lo consolida como léxico pasivo de alta frecuencia.</p>
+          <p data-i18n="tip1.p2">Aplícalo también en redes sociales: cambia el idioma de Instagram, YouTube y Netflix a inglés. En 4 semanas notarás que entiendes frases enteras sin traducir.</p>
+          <span class="tip-tag" data-i18n="tip1.tag">⏱ 30 segundos · Impacto alto · Gratis</span>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this)">
+        <div class="tip-card-header">
+          <div class="tip-num">2</div>
+          <h4 data-i18n="tip2.title">Shadowing: habla mientras escuchas</h4>
+          <span class="tip-toggle">▾</span>
+        </div>
+        <div class="tip-body">
+          <p data-i18n="tip2.p1">El shadowing consiste en repetir en voz alta lo que escuchas con 1–2 segundos de retraso, imitando la entonación, el ritmo y la pronunciación del hablante nativo. Es la técnica que usa el intérprete simultáneo Alexander Arguelles y es validada por la hipótesis del output de Swain.</p>
+          <p data-i18n="tip2.p2">Practica 10–15 minutos diarios con un podcast o serie que ya hayas visto. No necesitas entender todo — enfócate en el sonido y el flujo.</p>
+          <span class="tip-tag" data-i18n="tip2.tag">🗣️ Pronunciación + Fluidez · 15 min/día</span>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this)">
+        <div class="tip-card-header">
+          <div class="tip-num">3</div>
+          <h4 data-i18n="tip3.title">El diario en inglés (5 min al día)</h4>
+          <span class="tip-toggle">▾</span>
+        </div>
+        <div class="tip-body">
+          <p data-i18n="tip3.p1">Escribir en inglés activa el output productivo que identifica exactamente qué no sabes decir — no lo que crees que no sabes. Escribe 3–5 oraciones sobre tu día usando solo el vocabulario que ya tienes. Cuando no recuerdes una palabra, reemplázala por una más sencilla en lugar de traducir.</p>
+          <p data-i18n-html="tip3.p2">Herramienta recomendada: usa la app <strong>Journey</strong> o simplemente una nota en el celular. Con el tiempo, el diario se convierte en evidencia concreta de tu progreso.</p>
+          <span class="tip-tag" data-i18n="tip3.tag">✍️ Escritura · Output productivo · Gratis</span>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this)">
+        <div class="tip-card-header">
+          <div class="tip-num">4</div>
+          <h4 data-i18n="tip4.title">Transcripción activa: escucha y escribe</h4>
+          <span class="tip-toggle">▾</span>
+        </div>
+        <div class="tip-body">
+          <p data-i18n="tip4.p1">Pon un audio en inglés de 30–60 segundos y escríbelo tal como lo escuchas. Luego compara con el transcript original. Este ejercicio entrena el oído para separar palabras en la cadena sonora del inglés — uno de los mayores obstáculos para el hispanohablante principiante.</p>
+          <p data-i18n-html="tip4.p2">Los mejores materiales para esto: <em>BBC Learning English 6 Minute English</em> (siempre tienen transcript disponible) y los episodios cortos de <em>English Learning for Curious Minds</em>.</p>
+          <span class="tip-tag" data-i18n="tip4.tag">👂 Comprensión auditiva · Nivel B1–B2</span>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this)">
+        <div class="tip-card-header">
+          <div class="tip-num">5</div>
+          <h4 data-i18n="tip5.title">Repetición espaciada (SRS) con Anki</h4>
+          <span class="tip-toggle">▾</span>
+        </div>
+        <div class="tip-body">
+          <p data-i18n="tip5.p1">El cerebro olvida de forma predecible (curva de olvido de Ebbinghaus). El SRS programa las revisiones exactamente cuando estás a punto de olvidar, maximizando la retención con el mínimo tiempo. Con Anki, 15 minutos al día de repaso equivalen a lo que tardarías 3 horas memorizando de forma tradicional.</p>
+          <p data-i18n-html="tip5.p2">Consejo: no crees flashcards con traducciones aisladas. Usa la <strong>palabra + una oración de contexto real</strong> que hayas encontrado en tu material de inmersión.</p>
+          <span class="tip-tag" data-i18n="tip5.tag">🧠 Vocabulario · 15 min/día · Gratis</span>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this)">
+        <div class="tip-card-header">
+          <div class="tip-num">6</div>
+          <h4 data-i18n="tip6.title">Piensa en inglés: el monólogo interior</h4>
+          <span class="tip-toggle">▾</span>
+        </div>
+        <div class="tip-body">
+          <p data-i18n="tip6.p1">Cuando traduces internamente (español → inglés → habla) tienes un cuello de botella neurológico inevitable. El objetivo del bilingüismo real es pensar directamente en el segundo idioma. Empieza con contextos simples: describe mentalmente en inglés lo que ves mientras caminas, cocinas o manejas.</p>
+          <p data-i18n-html="tip6.p2">"<em>The car is red. There are many people. I'm going to the store.</em>" — oraciones simples, pero en tiempo real, sin filtro previo en español. Este hábito, sostenido 3 semanas, comienza a restructurar las redes neuronales lingüísticas.</p>
+          <span class="tip-tag" data-i18n="tip6.tag">🧩 Fluidez mental · Sin materiales · Gratis</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /panel-tips -->
+
+  <!-- PANEL: LIBROS -->
+  <div class="cont-panel" id="panel-libros">
+    <div class="libros-grid">
+
+      <div class="libro-card">
+        <div class="libro-spine" style="background: linear-gradient(135deg,#2aada8,#1d8a86);">📖</div>
+        <div class="libro-info">
+          <h4>Fluent Forever</h4>
+          <span class="libro-author">Gabriel Wyner</span>
+          <p data-i18n="lib1.desc">La guía definitiva para aprender idiomas con el método de repetición espaciada y pronunciación desde cero. Wyner aprendió aleman, italiano, francés y ruso con este sistema. Explica el cerebro, la memoria y las flashcards de forma práctica y sin jerga académica.</p>
+          <span class="libro-level lvl-a" data-i18n="lib1.level">Todos los niveles</span>
+        </div>
+      </div>
+
+      <div class="libro-card">
+        <div class="libro-spine" style="background: linear-gradient(135deg,#f5841f,#d96c10);">📕</div>
+        <div class="libro-info">
+          <h4>Becoming Fluent</h4>
+          <span class="libro-author">Richard Roberts & Roger Kreuz</span>
+          <p data-i18n="lib2.desc">Escrito por dos psicólogos cognitivos, este libro desafía los mitos del aprendizaje de idiomas en adultos con evidencia científica sólida. Explica por qué los adultos pueden aprender idiomas igual o mejor que los niños si usan las estrategias correctas.</p>
+          <span class="libro-level lvl-b" data-i18n="lib2.level">Principiante / Intermedio</span>
+        </div>
+      </div>
+
+      <div class="libro-card">
+        <div class="libro-spine" style="background: linear-gradient(135deg,#f5c518,#d4a800);">📒</div>
+        <div class="libro-info">
+          <h4>English Grammar in Use</h4>
+          <span class="libro-author">Raymond Murphy</span>
+          <p data-i18n="lib3.desc">El libro de gramática inglesa más vendido del mundo (más de 30 millones de copias). Su formato de página izquierda (explicación) + página derecha (ejercicio) lo hace ideal para aprendizaje autónomo. Directo, sin relleno y con ejemplos en contexto real.</p>
+          <span class="libro-level lvl-a">A2 – B2</span>
+        </div>
+      </div>
+
+      <div class="libro-card">
+        <div class="libro-spine" style="background: linear-gradient(135deg,#4a6cf7,#3450c0);">📘</div>
+        <div class="libro-info">
+          <h4>The Language Instinct</h4>
+          <span class="libro-author">Steven Pinker</span>
+          <p data-i18n="lib4.desc">Para quienes quieren entender profundamente cómo funciona el lenguaje humano. Pinker argumenta que la capacidad lingüística es un instinto biológico — lo que cambia radicalmente cómo ves tu propio aprendizaje. Lectura estimulante aunque exigente.</p>
+          <span class="libro-level lvl-c" data-i18n="lib4.level">Avanzado / Referencia</span>
+        </div>
+      </div>
+
+      <div class="libro-card">
+        <div class="libro-spine" style="background: linear-gradient(135deg,#2aada8,#145f5c);">📗</div>
+        <div class="libro-info">
+          <h4>How to Learn Any Language</h4>
+          <span class="libro-author">Barry Farber</span>
+          <p data-i18n="lib5.desc">Clásico del poliglotismo autodidacta. Farber aprendió más de 25 idiomas solo, y este libro recoge sus métodos: el sistema de las tarjetas secretas, aprender mientras haces otras cosas y aprovechar el tiempo muerto. Muy práctico y motivador.</p>
+          <span class="libro-level lvl-a" data-i18n="lib5.level">Principiante / Todos</span>
+        </div>
+      </div>
+
+      <div class="libro-card">
+        <div class="libro-spine" style="background: linear-gradient(135deg,#e84393,#a8205e);">📔</div>
+        <div class="libro-info">
+          <h4>Word Power Made Easy</h4>
+          <span class="libro-author">Norman Lewis</span>
+          <p data-i18n="lib6.desc">El método más eficaz para expandir vocabulario en inglés aprendiendo raíces latinas y griegas. Una raíz desbloquea docenas de palabras simultáneamente. Ideal para hispanohablantes porque el español comparte muchas de estas raíces — lo que te da ventaja inmediata.</p>
+          <span class="libro-level lvl-b" data-i18n="lib6.level">Intermedio / Avanzado</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /panel-libros -->
+
+  <!-- PANEL: APPS -->
+  <div class="cont-panel" id="panel-apps">
+    <div class="apps-grid">
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="background:rgba(42,173,168,0.15);">🃏</div>
+        <h4>Anki</h4>
+        <span class="app-uso" style="background:var(--teal);">Vocabulario</span>
+        <p data-i18n="app1.desc">El rey de la repetición espaciada. Crea tus propios mazos con frases de tu material real o descarga los top 1000–5000 palabras del inglés. Su algoritmo optimiza cada sesión para el máximo de retención con el mínimo tiempo.</p>
+        <div class="app-free" data-i18n="app1.free">✓ Gratis · Web + Android (iOS $24)</div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="background:rgba(245,197,24,0.12);">🎬</div>
+        <h4>Language Reactor</h4>
+        <span class="app-uso" style="background:var(--yellow);color:var(--navy);">Inmersión</span>
+        <p data-i18n="app2.desc">Extensión de Chrome que añade subtítulos en inglés Y en español simultáneamente en Netflix y YouTube. Permite pausar en cualquier palabra, ver su traducción y crear flashcards automáticamente en Anki.</p>
+        <div class="app-free" data-i18n="app2.free">✓ Gratis (con plan Pro opcional)</div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="background:rgba(245,132,31,0.12);">🎤</div>
+        <h4>Speechling</h4>
+        <span class="app-uso" style="background:var(--orange);">Pronunciación</span>
+        <p data-i18n="app3.desc">Graba tu pronunciación y recibe corrección de un coach nativo humano — no una IA. El feedback es en 24 horas y es específico. Para hispanohablantes, especialmente útil para trabajar las consonantes /θ/, /ð/, /ɹ/ que no existen en español.</p>
+        <div class="app-free" data-i18n="app3.free">✓ Gratis (100 correcciones/mes)</div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="background:rgba(126,206,244,0.12);">💬</div>
+        <h4>italki</h4>
+        <span class="app-uso" style="background:var(--blue-light);color:var(--navy);">Conversación</span>
+        <p data-i18n="app4.desc">Plataforma para conectar con profesores y tutores nativos a precios accesibles ($5–18 USD/hora). La diferencia entre un community tutor y un profesor profesional: el tutor te habla, el profesor te enseña. Ambos son útiles según tu etapa.</p>
+        <div class="app-free" data-i18n="app4.free">💲 Pago · Desde $5 USD/hora</div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="background:rgba(42,173,168,0.12);">📖</div>
+        <h4>Readlang</h4>
+        <span class="app-uso" style="background:var(--teal);">Lectura</span>
+        <p data-i18n="app5.desc">Lee cualquier texto en inglés y haz clic en las palabras que no conoces para ver su significado instantáneo. Las palabras se convierten automáticamente en flashcards con contexto real. Ideal para leer artículos, blogs y noticias sin abandonar el hilo.</p>
+        <div class="app-free" data-i18n="app5.free">✓ Gratis (versión básica muy funcional)</div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-icon-wrap" style="background:rgba(245,132,31,0.12);">🤖</div>
+        <h4>ChatGPT / Claude</h4>
+        <span class="app-uso" style="background:var(--orange);">Práctica total</span>
+        <p data-i18n="app6.desc">Tu tutor conversacional disponible 24/7. Úsalo para: corregir tus textos en inglés, simular conversaciones sobre cualquier tema, pedir explicaciones en inglés de conceptos, y que evalúe tu pronunciación si le mandas audio. Sin juicios, sin horarios.</p>
+        <div class="app-free" data-i18n="app6.free">✓ Gratis · Plan de pago para uso avanzado</div>
+      </div>
+
+    </div>
+  </div><!-- /panel-apps -->
+
+  <!-- PANEL: MEDIOS DIGITALES -->
+  <div class="cont-panel" id="panel-medios">
+    <div class="medios-grid">
+
+      <div class="medio-card">
+        <span class="medio-icon">🎙️</span>
+        <div class="medio-info">
+          <h4>English Learning for Curious Minds</h4>
+          <span class="medio-tipo" data-i18n="med1.tipo">Podcast · Nivel B1–C1</span>
+          <p data-i18n="med1.desc">Episodios de 10–20 minutos sobre temas de cultura, historia y ciencia narrados en inglés claro y articulado. Cada episodio viene con transcript completo. El presentador habla despacio pero de forma natural — ideal para el salto entre "inglés de clase" e "inglés real".</p>
+          <a href="https://www.leonardoenglish.com" target="_blank" class="medio-link">→ leonardoenglish.com</a>
+        </div>
+      </div>
+
+      <div class="medio-card">
+        <span class="medio-icon">📺</span>
+        <div class="medio-info">
+          <h4>BBC Learning English</h4>
+          <span class="medio-tipo" data-i18n="med2.tipo">Web + Podcast · Todos los niveles</span>
+          <p data-i18n="med2.desc">Uno de los recursos más completos y gratuitos del mundo. Tiene secciones por habilidad (pronunciación, gramática, vocabulario, escucha), videos de 6 minutos con transcript, y podcast diario de noticias simplificadas. Producido por la BBC — calidad de pronunciación impecable.</p>
+          <a href="https://www.bbc.co.uk/learningenglish" target="_blank" class="medio-link">→ bbc.co.uk/learningenglish</a>
+        </div>
+      </div>
+
+      <div class="medio-card">
+        <span class="medio-icon">🎞️</span>
+        <div class="medio-info">
+          <h4>TED Talks</h4>
+          <span class="medio-tipo" data-i18n="med3.tipo">Video · Nivel B2–C2</span>
+          <p data-i18n="med3.desc">Todas las charlas tienen subtítulos interactivos en inglés y en español. Empieza con las charlas más populares (10 M+ vistas) porque usan inglés más sencillo y articulado. Luego progresa a charlas académicas. Cada charla es un ejercicio de escucha + ampliación de vocabulario temático.</p>
+          <a href="https://www.ted.com" target="_blank" class="medio-link">→ ted.com</a>
+        </div>
+      </div>
+
+      <div class="medio-card">
+        <span class="medio-icon">📰</span>
+        <div class="medio-info">
+          <h4>VOA Learning English</h4>
+          <span class="medio-tipo" data-i18n="med4.tipo">Web + Podcast · A2–B1</span>
+          <p data-i18n="med4.desc">Voice of America produce noticias del mundo real en inglés simplificado, con vocabulario controlado y velocidad reducida. Es el puente perfecto entre el inglés de cursos y el inglés auténtico de los medios. Tienen podcast diario, texto completo y glosario de cada artículo.</p>
+          <a href="https://learningenglish.voanews.com" target="_blank" class="medio-link">→ learningenglish.voanews.com</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /panel-medios -->
+
+</section>
+
+<!-- ─── ¿CÓMO EMPEZAR? ─── -->
+<section id="empezar">
+  <h2 class="reveal" data-i18n="start.title">¿Cómo empezar?</h2>
+
+  <div class="empezar-grid">
+    <div class="empezar-card reveal d1">
+      <div class="empezar-img">🎯</div>
+      <h3 data-i18n="start.step1.title">Paso 1</h3>
+      <p data-i18n="start.step1.desc">Debes escoger una metodología de aprendizaje que se adapte a tu propio estilo.</p>
+    </div>
+    <div class="empezar-card reveal d2">
+      <div class="empezar-img">📊</div>
+      <h3 data-i18n="start.step2.title">Paso 2</h3>
+      <p data-i18n="start.step2.desc">Alimenta esa metodología con el contenido que hemos preparado para ti y aprende a distinguir por ti mismo lo que es útil.</p>
+    </div>
+    <div class="empezar-card reveal d3">
+      <div class="empezar-img">🤝</div>
+      <h3 data-i18n="start.step3.title">Paso 3</h3>
+      <p data-i18n="start.step3.desc">Apóyate en la tecnología y en la comunidad de autodidactas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACTO ─── -->
+<section id="contacto">
+
+  <span class="contact-label reveal" data-i18n="contact.label">📲 Estamos aquí para ayudarte</span>
+
+  <h2 class="reveal d1">
+    <span data-i18n-html="contact.title">¿Listo para empezar tu<br>camino al <em>bilingüismo</em>?</span>
+  </h2>
+
+  <p class="contact-desc reveal d2" data-i18n="contact.desc">
+    Escríbenos directamente por WhatsApp. Cuéntanos en qué nivel estás, 
+    qué has intentado antes y qué quieres lograr — te orientamos sin costo 
+    y sin compromisos.
+  </p>
+
+  <!-- CARD WHATSAPP -->
+  <div class="contact-card reveal d3">
+
+    <div class="contact-wa-icon">
+      <!-- WhatsApp SVG oficial -->
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2C8.268 2 2 8.268 2 16c0 2.47.666 4.784 1.83 6.768L2 30l7.42-1.796A13.934 13.934 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="white"/>
+        <path d="M16 4.5C9.649 4.5 4.5 9.649 4.5 16c0 2.178.6 4.216 1.644 5.957L4.5 27.5l5.7-1.624A11.462 11.462 0 0016 27.5c6.351 0 11.5-5.149 11.5-11.5S22.351 4.5 16 4.5z" fill="#25D366"/>
+        <path d="M21.5 18.82c-.3-.15-1.77-.874-2.044-.974-.274-.1-.473-.15-.672.15-.2.298-.772.974-.946 1.173-.174.2-.348.225-.647.075-.3-.15-1.265-.466-2.41-1.485-.89-.794-1.492-1.774-1.667-2.073-.174-.3-.018-.462.131-.611.134-.134.3-.349.449-.523.15-.175.2-.3.3-.499.1-.2.05-.374-.025-.524-.075-.149-.672-1.62-.92-2.218-.243-.583-.49-.504-.672-.513-.174-.009-.373-.011-.572-.011-.2 0-.523.075-.797.374-.274.3-1.046 1.022-1.046 2.493 0 1.47 1.072 2.892 1.221 3.091.15.2 2.11 3.22 5.11 4.513.714.308 1.271.492 1.705.63.717.228 1.37.196 1.886.119.575-.086 1.77-.724 2.02-1.423.248-.7.248-1.299.174-1.424-.075-.124-.274-.2-.573-.349z" fill="white"/>
+      </svg>
+    </div>
+
+    <h3 data-i18n="contact.card.title">Chatea con nosotros</h3>
+    <p data-i18n="contact.card.desc">Respondemos en menos de 24 horas. Puedes escribirnos en español — 
+      el inglés lo practicamos juntos cuando empieces tu proceso.</p>
+
+    <!-- Reemplaza el número con el de Anglospano -->
+    <a class="wa-btn"
+       href="https://wa.me/573181451781?text=Hola%20Anglospano%2C%20quiero%20información%20sobre%20cómo%20aprender%20inglés%20de%20forma%20autodidacta."
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2C8.268 2 2 8.268 2 16c0 2.47.666 4.784 1.83 6.768L2 30l7.42-1.796A13.934 13.934 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="white" opacity="0.3"/>
+        <path d="M21.5 18.82c-.3-.15-1.77-.874-2.044-.974-.274-.1-.473-.15-.672.15-.2.298-.772.974-.946 1.173-.174.2-.348.225-.647.075-.3-.15-1.265-.466-2.41-1.485-.89-.794-1.492-1.774-1.667-2.073-.174-.3-.018-.462.131-.611.134-.134.3-.349.449-.523.15-.175.2-.3.3-.499.1-.2.05-.374-.025-.524-.075-.149-.672-1.62-.92-2.218-.243-.583-.49-.504-.672-.513-.174-.009-.373-.011-.572-.011-.2 0-.523.075-.797.374-.274.3-1.046 1.022-1.046 2.493 0 1.47 1.072 2.892 1.221 3.091.15.2 2.11 3.22 5.11 4.513.714.308 1.271.492 1.705.63.717.228 1.37.196 1.886.119.575-.086 1.77-.724 2.02-1.423.248-.7.248-1.299.174-1.424-.075-.124-.274-.2-.573-.349z" fill="white"/>
+      </svg>
+      <span data-i18n="contact.wa.btn">Escribir por WhatsApp</span>
+    </a>
+
+    <p class="contact-note" data-i18n="contact.note">Al hacer clic se abrirá WhatsApp con un mensaje prescrito</p>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>© 2026 <span>Anglospano</span> · <span data-i18n="footer.tagline">Aprende español e inglés de forma autodidacta</span> 🌎 · <a href="#contacto" style="color:var(--teal);text-decoration:none;font-weight:700;" data-i18n="footer.contact">Contáctanos</a></p>
+</footer>
+
+<script>
+
+
+  // ─── LANGUAGE TOGGLE SYSTEM ───
+  const translations = {
+    es: {
+      'nav.what':         '¿Qué somos?',
+      'nav.purpose':      'Propósito',
+      'nav.howto':        '¿Cómo empezar?',
+      'nav.contact':      '📲 Contacto',
+      'qs.title':         '¿Qué somos?',
+      'qs.desc':          'Anglospano es una entidad experta en el aprendizaje y enseñanza del español e inglés como lenguas extranjeras.',
+      'prop.desc':        'Estamos deseosos de motivar a los próximos "subordinate bilinguals" a convertirse en bilingües 100% autodidactas.',
+      'bil.title':        '¿Conoces el término <br>"subordinate bilingual"?',
+      'bil.subtitle':     'observa la comparación',
+      'bil.compound':     'Gabriela es hija de Juan, un inmigrante colombiano, y de Monica quien es una mujer estadounidense. En casa aprende a comunicarse en inglés y español.',
+      'bil.subordinate':  'Daniela es una mujer adulta hispanohablante pero actualmente se encuentra aprendiendo inglés en un curso tradicional.',
+      'bil.coordinate':   'Jhon es un niño latino, él y su familia migraron hace un año a estados unidos. Jhon aprendió a comunicarse en inglés con sus compañeros.',
+      'puntos.title':     'Puntos<br>principales',
+      'puntos.badge':     '¿Por qué la mayoría fracasa?',
+      'puntos.hook':      'El internet está lleno de contenido.<br>Pero aprender inglés no es cuestión de<br><em>consumir más</em> — es cuestión de<br><em>elegir mejor</em>.',
+      'puntos.desc':      'El 80 % de quienes intentan aprender inglés de forma autodidacta abandonan antes de los seis meses. No porque les falte inteligencia ni tiempo: les falta un <strong>mapa claro</strong>. En Anglospano filtramos miles de horas de contenido gratuito y de pago para darte exactamente lo que necesitas — dependiendo de tu punto de partida y tu estilo de aprendizaje.',
+      'puntos.met.title': 'Metodología de aprendizaje',
+      'puntos.met.desc':  'Un sistema de 4 pasos basado en lingüística aplicada para avanzar de forma consistente y medible.',
+      'puntos.cont.title':'Contenido de valor',
+      'puntos.cont.desc': 'Tips, libros, apps y recursos digitales curados por expertos. Solo lo que realmente funciona.',
+      'met.label':        '📐 Tu sistema personalizado',
+      'met.callout.title':'¿Por qué el inglés se te escapa aunque llevas años estudiándolo?',
+      'met.callout.body': 'Los adultos hispanohablantes no adquieren el inglés como lo hicieron con el español de niños. Tu cerebro ya tiene un sistema gramatical instalado — el español — y <span>filtra el inglés a través de él</span>. Eso genera interferencias reales: confundes el orden de las palabras, omites el auxiliar en preguntas, y traducir mentalmente te frena. La escucha pasiva sola te da bilingüismo receptivo: entiendes, pero no produces. Para dominar la gramática inglesa necesitas <span>estudio explícito más práctica de output</span> — exactamente lo que esta metodología combina.',
+      'met.desc':         'No se trata de escuchar más horas y esperar que el inglés "se pegue". El adulto hispanohablante necesita entender la gramática inglesa de forma explícita — las estructuras que el español nunca te enseñó — y luego activarlas con práctica real de output. Estos cuatro pasos combinan ambas cosas: estudio dirigido e inmersión productiva.',
+      'acc1.title':       'Escoge los materiales adecuados',
+      'acc1.sub':         'El contenido correcto en el nivel correcto cambia todo',
+      'acc1.intro':       'La hipótesis del output de Merrill Swain propone que <strong>producir</strong> el idioma — hablarlo y escribirlo — es tan esencial como consumirlo. Cuando intentas expresarte, tu cerebro detecta con precisión los vacíos entre lo que quieres decir y lo que realmente puedes decir. Esa brecha es el motor del aprendizaje real, y es la razón por la que consumir contenido sin producir nada te deja permanentemente en el nivel "lo entiendo pero no puedo hablarlo".',
+      'acc1.yes.title':   '✅ Lo que SÍ funciona',
+      'acc1.yes.1':       'Series y podcasts en tu nivel (i+1)',
+      'acc1.yes.2':       'Lectura extensiva con diccionario',
+      'acc1.yes.3':       'Canciones con letra visible',
+      'acc1.yes.4':       'YouTube con subtítulos en inglés',
+      'acc1.no.title':    '❌ Lo que NO funciona',
+      'acc1.no.1':        'Gramática pura sin contexto real',
+      'acc1.no.2':        'Traducción palabra por palabra',
+      'acc1.no.3':        'Apps de 5 minutos al día sin inmersión',
+      'acc1.no.4':        'Contenido 100 % en español sobre inglés',
+      'acc1.tip':         'Elige materiales que te <strong>obliguen a producir</strong>: podcasts con preguntas al final, series con las que puedas practicar shadowing, o libros sencillos que puedas resumir en voz alta. El output — aunque sea imperfecto — activa el mecanismo de aprendizaje que Swain identificó. <em>Bluey</em> o <em>English Learning for Curious Minds</em> son buenos puntos de entrada para practicar escucha activa + repetición oral.',
+      'acc2.title':       'Aprende las disciplinas lingüísticas',
+      'acc2.sub':         'El idioma no es solo vocabulario — tiene 5 pilares',
+      'acc2.intro':       'Un idioma tiene cinco disciplinas que trabajan juntas. Muchos estudiantes solo se enfocan en gramática y vocabulario, ignorando las demás. El resultado: entienden, pero no pueden hablar. Conocer las cinco te permite identificar dónde está tu cuello de botella real.',
+      'acc2.pillars.title':'🧩 Los 5 pilares',
+      'acc2.p1':          'Vocabulario (léxico activo y pasivo)',
+      'acc2.p2':          'Gramática (estructura y sintaxis)',
+      'acc2.p3':          'Pronunciación (fonología)',
+      'acc2.p4':          'Fluidez (velocidad de procesamiento)',
+      'acc2.p5':          'Pragmática (uso social del idioma)',
+      'acc2.which.title': '📊 ¿Cuál trabajar primero?',
+      'acc2.w1':          'Principiante → Vocabulario + escucha',
+      'acc2.w2':          'Intermedio → Fluidez + gramática en uso',
+      'acc2.w3':          'Avanzado → Pragmática + pronunciación',
+      'acc2.w4':          'Todos → Producción diaria (hablar/escribir)',
+      'acc2.tip':         'El vocabulario tiene el mayor ROI al inicio: con solo las <strong>1,000 palabras más frecuentes del inglés</strong> entiendes el 85 % de una conversación casual. Prioriza ahí antes de invertir tiempo en gramática compleja.',
+      'acc3.title':       'Práctica intensiva',
+      'acc3.sub':         'La consistencia supera a la intensidad esporádica',
+      'acc3.intro':       'El cerebro consolida el aprendizaje durante el sueño y a través de la repetición espaciada. No necesitas 4 horas al día — necesitas <strong>30–60 minutos diarios sin interrupciones</strong>, durante al menos 6 meses. La neurociencia llama a esto "deliberate practice": práctica intencional con retroalimentación inmediata.',
+      'acc3.r.title':     '⏱️ Rutina mínima viable',
+      'acc3.r1':          '15 min — repaso con Anki (flashcards)',
+      'acc3.r2':          '20 min — escucha activa (podcast/serie)',
+      'acc3.r3':          '10 min — producción oral (shadowing)',
+      'acc3.r4':          '10 min — escritura libre en inglés',
+      'acc3.t.title':     '🎯 Técnicas de alta efectividad',
+      'acc3.t1':          'Shadowing (imitar al hablante nativo)',
+      'acc3.t2':          'Repetición espaciada (SRS)',
+      'acc3.t3':          'Immersion total (solo inglés en el celu)',
+      'acc3.t4':          'Diario de aprendizaje en inglés',
+      'acc3.tip':         'Cambia el idioma de tu teléfono a inglés hoy mismo. Es gratis, toma 30 segundos y crea <strong>200–400 microexposiciones diarias</strong> al idioma sin esfuerzo consciente. Pequeña acción, gran impacto acumulado.',
+      'acc4.title':       'Apoyo en tecnología',
+      'acc4.sub':         'Las herramientas correctas multiplican tu progreso',
+      'acc4.intro':       'Vivimos en la era de oro del aprendizaje autodidacta. Nunca antes un aprendiz tuvo acceso a tutor nativo virtual, corrector de pronunciación en tiempo real y millones de horas de contenido auténtico — todo desde el celular. El truco es saber cuáles herramientas usar y para qué etapa.',
+      'acc4.stack.title': '🛠️ Stack recomendado',
+      'acc4.apps.title':  '📱 Apps de inmersión',
+      'cont.title':       'Contenido de Valor',
+      'cont.desc':        'Todo lo que necesitas para avanzar, filtrado y organizado por expertos. Nada de relleno: solo recursos que han demostrado resultados reales en el camino al bilingüismo autodidacta.',
+      'tab.tips':         'Tips de aprendizaje',
+      'tab.books':        'Libros',
+      'tab.apps':         'Apps y herramientas',
+      'tab.media':        'Medios digitales',
+      'tip1.title':       'Cambia el idioma de tu teléfono',
+      'tip1.p1':          'Este simple cambio genera entre 200 y 400 microexposiciones diarias al inglés sin ningún esfuerzo consciente. Tu cerebro procesa el vocabulario de interfaz repetitivo (Settings, Save, Share, Search) y lo consolida como léxico pasivo de alta frecuencia.',
+      'tip1.p2':          'Aplícalo también en redes sociales: cambia el idioma de Instagram, YouTube y Netflix a inglés. En 4 semanas notarás que entiendes frases enteras sin traducir.',
+      'tip1.tag':         '⏱ 30 segundos · Impacto alto · Gratis',
+      'tip2.title':       'Shadowing: habla mientras escuchas',
+      'tip2.p1':          'El shadowing consiste en repetir en voz alta lo que escuchas con 1–2 segundos de retraso, imitando la entonación, el ritmo y la pronunciación del hablante nativo. Es la técnica que usa el intérprete simultáneo Alexander Arguelles y es validada por la hipótesis del output de Swain.',
+      'tip2.p2':          'Practica 10–15 minutos diarios con un podcast o serie que ya hayas visto. No necesitas entender todo — enfócate en el sonido y el flujo.',
+      'tip2.tag':         '🗣️ Pronunciación + Fluidez · 15 min/día',
+      'tip3.title':       'El diario en inglés (5 min al día)',
+      'tip3.p1':          'Escribir en inglés activa el output productivo que identifica exactamente qué no sabes decir — no lo que crees que no sabes. Escribe 3–5 oraciones sobre tu día usando solo el vocabulario que ya tienes. Cuando no recuerdes una palabra, reemplázala por una más sencilla en lugar de traducir.',
+      'tip3.p2':          'Herramienta recomendada: usa la app <strong>Journey</strong> o simplemente una nota en el celular. Con el tiempo, el diario se convierte en evidencia concreta de tu progreso.',
+      'tip3.tag':         '✍️ Escritura · Output productivo · Gratis',
+      'tip4.title':       'Transcripción activa: escucha y escribe',
+      'tip4.p1':          'Pon un audio en inglés de 30–60 segundos y escríbelo tal como lo escuchas. Luego compara con el transcript original. Este ejercicio entrena el oído para separar palabras en la cadena sonora del inglés — uno de los mayores obstáculos para el hispanohablante principiante.',
+      'tip4.p2':          'Los mejores materiales para esto: <em>BBC Learning English 6 Minute English</em> (siempre tienen transcript disponible) y los episodios cortos de <em>English Learning for Curious Minds</em>.',
+      'tip4.tag':         '👂 Comprensión auditiva · Nivel B1–B2',
+      'tip5.title':       'Repetición espaciada (SRS) con Anki',
+      'tip5.p1':          'El cerebro olvida de forma predecible (curva de olvido de Ebbinghaus). El SRS programa las revisiones exactamente cuando estás a punto de olvidar, maximizando la retención con el mínimo tiempo. Con Anki, 15 minutos al día de repaso equivalen a lo que tardarías 3 horas memorizando de forma tradicional.',
+      'tip5.p2':          'Consejo: no crees flashcards con traducciones aisladas. Usa la <strong>palabra + una oración de contexto real</strong> que hayas encontrado en tu material de inmersión.',
+      'tip5.tag':         '🧠 Vocabulario · 15 min/día · Gratis',
+      'tip6.title':       'Piensa en inglés: el monólogo interior',
+      'tip6.p1':          'Cuando traduces internamente (español → inglés → habla) tienes un cuello de botella neurológico inevitable. El objetivo del bilingüismo real es pensar directamente en el segundo idioma. Empieza con contextos simples: describe mentalmente en inglés lo que ves mientras caminas, cocinas o manejas.',
+      'tip6.p2':          '"<em>The car is red. There are many people. I\'m going to the store.</em>" — oraciones simples, pero en tiempo real, sin filtro previo en español. Este hábito, sostenido 3 semanas, comienza a restructurar las redes neuronales lingüísticas.',
+      'tip6.tag':         '🧩 Fluidez mental · Sin materiales · Gratis',
+      'lib1.desc':        'La guía definitiva para aprender idiomas con el método de repetición espaciada y pronunciación desde cero. Wyner aprendió aleman, italiano, francés y ruso con este sistema. Explica el cerebro, la memoria y las flashcards de forma práctica y sin jerga académica.',
+      'lib1.level':       'Todos los niveles',
+      'lib2.desc':        'Escrito por dos psicólogos cognitivos, este libro desafía los mitos del aprendizaje de idiomas en adultos con evidencia científica sólida. Explica por qué los adultos pueden aprender idiomas igual o mejor que los niños si usan las estrategias correctas.',
+      'lib2.level':       'Principiante / Intermedio',
+      'lib3.desc':        'El libro de gramática inglesa más vendido del mundo (más de 30 millones de copias). Su formato de página izquierda (explicación) + página derecha (ejercicio) lo hace ideal para aprendizaje autónomo. Directo, sin relleno y con ejemplos en contexto real.',
+      'lib4.desc':        'Para quienes quieren entender profundamente cómo funciona el lenguaje humano. Pinker argumenta que la capacidad lingüística es un instinto biológico — lo que cambia radicalmente cómo ves tu propio aprendizaje. Lectura estimulante aunque exigente.',
+      'lib4.level':       'Avanzado / Referencia',
+      'lib5.desc':        'Clásico del poliglotismo autodidacta. Farber aprendió más de 25 idiomas solo, y este libro recoge sus métodos: el sistema de las tarjetas secretas, aprender mientras haces otras cosas y aprovechar el tiempo muerto. Muy práctico y motivador.',
+      'lib5.level':       'Principiante / Todos',
+      'lib6.desc':        'El método más eficaz para expandir vocabulario en inglés aprendiendo raíces latinas y griegas. Una raíz desbloquea docenas de palabras simultáneamente. Ideal para hispanohablantes porque el español comparte muchas de estas raíces — lo que te da ventaja inmediata.',
+      'lib6.level':       'Intermedio / Avanzado',
+      'app1.desc':        'El rey de la repetición espaciada. Crea tus propios mazos con frases de tu material real o descarga los top 1000–5000 palabras del inglés. Su algoritmo optimiza cada sesión para el máximo de retención con el mínimo tiempo.',
+      'app1.free':        '✓ Gratis · Web + Android (iOS $24)',
+      'app2.desc':        'Extensión de Chrome que añade subtítulos en inglés Y en español simultáneamente en Netflix y YouTube. Permite pausar en cualquier palabra, ver su traducción y crear flashcards automáticamente en Anki.',
+      'app2.free':        '✓ Gratis (con plan Pro opcional)',
+      'app3.desc':        'Graba tu pronunciación y recibe corrección de un coach nativo humano — no una IA. El feedback es en 24 horas y es específico. Para hispanohablantes, especialmente útil para trabajar las consonantes /θ/, /ð/, /ɹ/ que no existen en español.',
+      'app3.free':        '✓ Gratis (100 correcciones/mes)',
+      'app4.desc':        'Plataforma para conectar con profesores y tutores nativos a precios accesibles ($5–18 USD/hora). La diferencia entre un community tutor y un profesor profesional: el tutor te habla, el profesor te enseña. Ambos son útiles según tu etapa.',
+      'app4.free':        '💲 Pago · Desde $5 USD/hora',
+      'app5.desc':        'Lee cualquier texto en inglés y haz clic en las palabras que no conoces para ver su significado instantáneo. Las palabras se convierten automáticamente en flashcards con contexto real. Ideal para leer artículos, blogs y noticias sin abandonar el hilo.',
+      'app5.free':        '✓ Gratis (versión básica muy funcional)',
+      'app6.desc':        'Tu tutor conversacional disponible 24/7. Úsalo para: corregir tus textos en inglés, simular conversaciones sobre cualquier tema, pedir explicaciones en inglés de conceptos, y que evalúe tu pronunciación si le mandas audio. Sin juicios, sin horarios.',
+      'app6.free':        '✓ Gratis · Plan de pago para uso avanzado',
+      'med1.desc':        'Episodios de 10–20 minutos sobre temas de cultura, historia y ciencia narrados en inglés claro y articulado. Cada episodio viene con transcript completo. El presentador habla despacio pero de forma natural — ideal para el salto entre "inglés de clase" e "inglés real".',
+      'med1.tipo':        'Podcast · Nivel B1–C1',
+      'med2.desc':        'Uno de los recursos más completos y gratuitos del mundo. Tiene secciones por habilidad (pronunciación, gramática, vocabulario, escucha), videos de 6 minutos con transcript, y podcast diario de noticias simplificadas. Producido por la BBC — calidad de pronunciación impecable.',
+      'med2.tipo':        'Web + Podcast · Todos los niveles',
+      'med3.desc':        'Todas las charlas tienen subtítulos interactivos en inglés y en español. Empieza con las charlas más populares (10 M+ vistas) porque usan inglés más sencillo y articulado. Luego progresa a charlas académicas. Cada charla es un ejercicio de escucha + ampliación de vocabulario temático.',
+      'med3.tipo':        'Video · Nivel B2–C2',
+      'med4.desc':        'Voice of America produce noticias del mundo real en inglés simplificado, con vocabulario controlado y velocidad reducida. Es el puente perfecto entre el inglés de cursos y el inglés auténtico de los medios. Tienen podcast diario, texto completo y glosario de cada artículo.',
+      'med4.tipo':        'Web + Podcast · A2–B1',
+      'start.title':      '¿Cómo empezar?',
+      'start.step1.title':'Paso 1',
+      'start.step1.desc': 'Debes escoger una metodología de aprendizaje que se adapte a tu propio estilo.',
+      'start.step2.title':'Paso 2',
+      'start.step2.desc': 'Alimenta esa metodología con el contenido que hemos preparado para ti y aprende a distinguir por ti mismo lo que es útil.',
+      'start.step3.title':'Paso 3',
+      'start.step3.desc': 'Apóyate en la tecnología y en la comunidad de autodidactas.',
+      'contact.label':    '📲 Estamos aquí para ayudarte',
+      'contact.title':    '¿Listo para empezar tu<br>camino al <em>bilingüismo</em>?',
+      'contact.desc':     'Escríbenos directamente por WhatsApp. Cuéntanos en qué nivel estás, qué has intentado antes y qué quieres lograr — te orientamos sin costo y sin compromisos.',
+      'contact.card.title':'Chatea con nosotros',
+      'contact.card.desc':'Respondemos en menos de 24 horas. Puedes escribirnos en español — el inglés lo practicamos juntos cuando empieces tu proceso.',
+      'contact.wa.btn':   'Escribir por WhatsApp',
+      'contact.note':     'Al hacer clic se abrirá WhatsApp con un mensaje prescrito',
+      'footer.tagline':   'Aprende español e inglés de forma autodidacta',
+      'footer.contact':   'Contáctanos',
+    },
+    en: {
+      'nav.what':         'What are we?',
+      'nav.purpose':      'Purpose',
+      'nav.howto':        'How to start?',
+      'nav.contact':      '📲 Contact',
+      'qs.title':         'What are we?',
+      'qs.desc':          'Anglospano is an expert entity in learning and teaching Spanish and English as foreign languages.',
+      'prop.desc':        'We are eager to motivate the next "subordinate bilinguals" to become 100% self-taught bilinguals.',
+      'bil.title':        'Do you know the term <br>"subordinate bilingual"?',
+      'bil.subtitle':     'observe the comparison',
+      'bil.compound':     'Gabriela is the daughter of Juan, a Colombian immigrant, and Monica, an American woman. At home she learns to communicate in English and Spanish.',
+      'bil.subordinate':  'Daniela is a Spanish-speaking adult woman who is currently learning English in a traditional course.',
+      'bil.coordinate':   'Jhon is a Latino boy who migrated to the United States a year ago with his family. He learned to communicate in English with his classmates.',
+      'puntos.title':     'Main<br>Points',
+      'puntos.badge':     'Why do most people fail?',
+      'puntos.hook':      'The internet is full of content.<br>But learning English is not about<br><em>consuming more</em> — it\'s about<br><em>choosing better</em>.',
+      'puntos.desc':      '80% of those who try to learn English on their own quit before six months are up. Not because they lack intelligence or time: they lack a <strong>clear roadmap</strong>. At Anglospano we filter thousands of hours of free and paid content to give you exactly what you need — depending on your starting point and learning style.',
+      'puntos.met.title': 'Learning Methodology',
+      'puntos.met.desc':  'A 4-step system based on applied linguistics to advance consistently and measurably.',
+      'puntos.cont.title':'Valuable Content',
+      'puntos.cont.desc': 'Tips, books, apps and digital resources curated by experts. Only what really works.',
+      'met.label':        '📐 Your personalized system',
+      'met.callout.title':'Why does English keep slipping away even after years of studying it?',
+      'met.callout.body': 'Spanish-speaking adults don\'t acquire English the way they learned Spanish as children. Your brain already has a grammatical system installed — Spanish — and <span>filters English through it</span>. This creates real interferences: you confuse word order, drop auxiliaries in questions, and mental translation slows you down. Passive listening alone gives you receptive bilingualism: you understand, but can\'t produce. To master English grammar you need <span>explicit study plus output practice</span> — exactly what this methodology combines.',
+      'met.desc':         'It\'s not about listening more hours and waiting for English to "stick". Spanish-speaking adults need to understand English grammar explicitly — the structures Spanish never taught you — and then activate them with real output practice. These four steps combine both: structured study and productive immersion.',
+      'acc1.title':       'Choose the right materials',
+      'acc1.sub':         'The right content at the right level changes everything',
+      'acc1.intro':       'Merrill Swain\'s output hypothesis proposes that <strong>producing</strong> the language — speaking and writing it — is as essential as consuming it. When you try to express yourself, your brain precisely detects the gaps between what you want to say and what you can actually say. That gap is the engine of real learning, and it\'s why consuming content without producing anything leaves you permanently at the "I understand it but can\'t speak it" level.',
+      'acc1.yes.title':   '✅ What DOES work',
+      'acc1.yes.1':       'Series and podcasts at your level (i+1)',
+      'acc1.yes.2':       'Extensive reading with a dictionary',
+      'acc1.yes.3':       'Songs with visible lyrics',
+      'acc1.yes.4':       'YouTube with English subtitles',
+      'acc1.no.title':    '❌ What does NOT work',
+      'acc1.no.1':        'Pure grammar without real context',
+      'acc1.no.2':        'Word-for-word translation',
+      'acc1.no.3':        '5-minute apps without immersion',
+      'acc1.no.4':        '100% Spanish content about English',
+      'acc1.tip':         'Choose materials that <strong>force you to produce</strong>: podcasts with questions at the end, series you can shadow, or simple books you can summarize aloud. Output — even imperfect — activates the learning mechanism Swain identified. <em>Bluey</em> or <em>English Learning for Curious Minds</em> are great entry points for active listening + oral repetition.',
+      'acc2.title':       'Learn the linguistic disciplines',
+      'acc2.sub':         'Language is not just vocabulary — it has 5 pillars',
+      'acc2.intro':       'A language has five disciplines that work together. Many students only focus on grammar and vocabulary, ignoring the rest. The result: they understand, but can\'t speak. Knowing all five lets you identify where your real bottleneck is.',
+      'acc2.pillars.title':'🧩 The 5 pillars',
+      'acc2.p1':          'Vocabulary (active and passive lexicon)',
+      'acc2.p2':          'Grammar (structure and syntax)',
+      'acc2.p3':          'Pronunciation (phonology)',
+      'acc2.p4':          'Fluency (processing speed)',
+      'acc2.p5':          'Pragmatics (social use of language)',
+      'acc2.which.title': '📊 Which to work on first?',
+      'acc2.w1':          'Beginner → Vocabulary + listening',
+      'acc2.w2':          'Intermediate → Fluency + grammar in use',
+      'acc2.w3':          'Advanced → Pragmatics + pronunciation',
+      'acc2.w4':          'Everyone → Daily production (speaking/writing)',
+      'acc2.tip':         'Vocabulary has the highest ROI at the start: with just the <strong>1,000 most frequent English words</strong> you can understand 85% of a casual conversation. Prioritize that before investing time in complex grammar.',
+      'acc3.title':       'Intensive Practice',
+      'acc3.sub':         'Consistency beats sporadic intensity',
+      'acc3.intro':       'The brain consolidates learning during sleep and through spaced repetition. You don\'t need 4 hours a day — you need <strong>30–60 uninterrupted minutes daily</strong> for at least 6 months. Neuroscience calls this "deliberate practice": intentional practice with immediate feedback.',
+      'acc3.r.title':     '⏱️ Minimum viable routine',
+      'acc3.r1':          '15 min — review with Anki (flashcards)',
+      'acc3.r2':          '20 min — active listening (podcast/series)',
+      'acc3.r3':          '10 min — oral production (shadowing)',
+      'acc3.r4':          '10 min — free writing in English',
+      'acc3.t.title':     '🎯 High-effectiveness techniques',
+      'acc3.t1':          'Shadowing (imitating the native speaker)',
+      'acc3.t2':          'Spaced repetition (SRS)',
+      'acc3.t3':          'Total immersion (phone entirely in English)',
+      'acc3.t4':          'Learning journal in English',
+      'acc3.tip':         'Change your phone\'s language to English today. It\'s free, takes 30 seconds, and creates <strong>200–400 daily micro-exposures</strong> to the language without conscious effort. Small action, big cumulative impact.',
+      'acc4.title':       'Technology Support',
+      'acc4.sub':         'The right tools multiply your progress',
+      'acc4.intro':       'We live in the golden age of self-directed learning. Never before has a learner had access to a virtual native tutor, real-time pronunciation correction and millions of hours of authentic content — all from a smartphone. The trick is knowing which tools to use and for which stage.',
+      'acc4.stack.title': '🛠️ Recommended stack',
+      'acc4.apps.title':  '📱 Immersion apps',
+      'cont.title':       'Valuable Content',
+      'cont.desc':        'Everything you need to progress, filtered and organized by experts. No filler: only resources that have proven real results on the path to self-taught bilingualism.',
+      'tab.tips':         'Learning tips',
+      'tab.books':        'Books',
+      'tab.apps':         'Apps & tools',
+      'tab.media':        'Digital media',
+      'tip1.title':       'Change your phone\'s language',
+      'tip1.p1':          'This simple change generates between 200 and 400 daily micro-exposures to English without any conscious effort. Your brain processes high-frequency interface vocabulary (Settings, Save, Share, Search) and consolidates it as passive high-frequency lexicon.',
+      'tip1.p2':          'Apply it also on social media: change the language of Instagram, YouTube and Netflix to English. In 4 weeks you\'ll notice you understand entire phrases without translating.',
+      'tip1.tag':         '⏱ 30 seconds · High impact · Free',
+      'tip2.title':       'Shadowing: speak while you listen',
+      'tip2.p1':          'Shadowing involves repeating aloud what you hear with a 1–2 second delay, imitating the intonation, rhythm and pronunciation of the native speaker. It\'s the technique used by simultaneous interpreter Alexander Arguelles and validated by Swain\'s output hypothesis.',
+      'tip2.p2':          'Practice 10–15 minutes daily with a podcast or series you\'ve already seen. You don\'t need to understand everything — focus on the sound and flow.',
+      'tip2.tag':         '🗣️ Pronunciation + Fluency · 15 min/day',
+      'tip3.title':       'The English journal (5 min a day)',
+      'tip3.p1':          'Writing in English activates productive output that identifies exactly what you can\'t say — not what you think you can\'t say. Write 3–5 sentences about your day using only the vocabulary you already have. When you can\'t remember a word, replace it with a simpler one instead of translating.',
+      'tip3.p2':          'Recommended tool: use the <strong>Journey</strong> app or simply a note on your phone. Over time, the journal becomes concrete evidence of your progress.',
+      'tip3.tag':         '✍️ Writing · Productive output · Free',
+      'tip4.title':       'Active transcription: listen and write',
+      'tip4.p1':          'Play an English audio clip of 30–60 seconds and write down exactly what you hear. Then compare with the original transcript. This exercise trains your ear to separate words in the English sound chain — one of the biggest obstacles for beginner Spanish speakers.',
+      'tip4.p2':          'Best materials for this: <em>BBC Learning English 6 Minute English</em> (always has a transcript available) and the short episodes of <em>English Learning for Curious Minds</em>.',
+      'tip4.tag':         '👂 Listening comprehension · Level B1–B2',
+      'tip5.title':       'Spaced repetition (SRS) with Anki',
+      'tip5.p1':          'The brain forgets in a predictable way (Ebbinghaus forgetting curve). SRS schedules reviews at exactly the moment you\'re about to forget, maximizing retention with minimum time. With Anki, 15 minutes of daily review equals what would take 3 hours of traditional memorization.',
+      'tip5.p2':          'Tip: don\'t create flashcards with isolated translations. Use the <strong>word + a real context sentence</strong> you found in your immersion material.',
+      'tip5.tag':         '🧠 Vocabulary · 15 min/day · Free',
+      'tip6.title':       'Think in English: the inner monologue',
+      'tip6.p1':          'When you translate internally (Spanish → English → speech) you have an inevitable neurological bottleneck. The goal of real bilingualism is to think directly in the second language. Start with simple contexts: mentally describe in English what you see while walking, cooking or driving.',
+      'tip6.p2':          '"<em>The car is red. There are many people. I\'m going to the store.</em>" — simple sentences, but in real time, without a prior filter in Spanish. This habit, sustained for 3 weeks, begins to restructure linguistic neural networks.',
+      'tip6.tag':         '🧩 Mental fluency · No materials · Free',
+      'lib1.desc':        'The definitive guide to learning languages with the spaced repetition method and pronunciation from scratch. Wyner learned German, Italian, French and Russian with this system. Explains the brain, memory and flashcards in a practical way without academic jargon.',
+      'lib1.level':       'All levels',
+      'lib2.desc':        'Written by two cognitive psychologists, this book challenges the myths of language learning in adults with solid scientific evidence. Explains why adults can learn languages as well or better than children if they use the right strategies.',
+      'lib2.level':       'Beginner / Intermediate',
+      'lib3.desc':        'The best-selling English grammar book in the world (over 30 million copies). Its left-page (explanation) + right-page (exercise) format makes it ideal for autonomous learning. Direct, no filler, with real-context examples.',
+      'lib4.desc':        'For those who want to deeply understand how human language works. Pinker argues that linguistic ability is a biological instinct — which radically changes how you view your own learning. Stimulating but demanding reading.',
+      'lib4.level':       'Advanced / Reference',
+      'lib5.desc':        'A classic of self-taught polyglotism. Farber learned over 25 languages on his own, and this book collects his methods: the secret card system, learning while doing other things, and making use of dead time. Very practical and motivating.',
+      'lib5.level':       'Beginner / All levels',
+      'lib6.desc':        'The most effective method for expanding vocabulary in English by learning Latin and Greek roots. One root unlocks dozens of words simultaneously. Ideal for Spanish speakers because Spanish shares many of these roots — giving you an immediate advantage.',
+      'lib6.level':       'Intermediate / Advanced',
+      'app1.desc':        'The king of spaced repetition. Create your own decks with phrases from your real material or download the top 1,000–5,000 English words. Its algorithm optimizes each session for maximum retention with minimum time.',
+      'app1.free':        '✓ Free · Web + Android (iOS $24)',
+      'app2.desc':        'A Chrome extension that adds English AND Spanish subtitles simultaneously on Netflix and YouTube. Lets you pause on any word, see its translation and automatically create flashcards in Anki.',
+      'app2.free':        '✓ Free (with optional Pro plan)',
+      'app3.desc':        'Record your pronunciation and receive correction from a human native coach — not an AI. Feedback comes within 24 hours and is specific. For Spanish speakers, especially useful for working on consonants /θ/, /ð/, /ɹ/ that don\'t exist in Spanish.',
+      'app3.free':        '✓ Free (100 corrections/month)',
+      'app4.desc':        'Platform to connect with native teachers and tutors at affordable prices ($5–18 USD/hour). The difference between a community tutor and a professional teacher: the tutor talks to you, the teacher teaches you. Both are useful depending on your stage.',
+      'app4.free':        '💲 Paid · From $5 USD/hour',
+      'app5.desc':        'Read any text in English and click on words you don\'t know to see their meaning instantly. Words are automatically converted into flashcards with real context. Ideal for reading articles, blogs and news without losing the thread.',
+      'app5.free':        '✓ Free (basic version very functional)',
+      'app6.desc':        'Your conversational tutor available 24/7. Use it to: correct your English texts, simulate conversations on any topic, ask for explanations of concepts in English, and have it evaluate your pronunciation if you send audio. No judgments, no schedules.',
+      'app6.free':        '✓ Free · Paid plan for advanced use',
+      'med1.desc':        '10–20 minute episodes about culture, history and science narrated in clear, articulate English. Each episode comes with a full transcript. The presenter speaks slowly but naturally — ideal for the leap between "classroom English" and "real English".',
+      'med1.tipo':        'Podcast · Level B1–C1',
+      'med2.desc':        'One of the most complete and free resources in the world. It has sections by skill (pronunciation, grammar, vocabulary, listening), 6-minute videos with transcripts, and a daily podcast of simplified news. Produced by the BBC — impeccable pronunciation quality.',
+      'med2.tipo':        'Web + Podcast · All levels',
+      'med3.desc':        'All talks have interactive subtitles in English and Spanish. Start with the most popular talks (10M+ views) because they use simpler, more articulate English. Then progress to academic talks. Each talk is a listening exercise + thematic vocabulary expansion.',
+      'med3.tipo':        'Video · Level B2–C2',
+      'med4.desc':        'Voice of America produces real-world news in simplified English, with controlled vocabulary and reduced speed. It\'s the perfect bridge between course English and authentic media English. They have a daily podcast, full text and a glossary for each article.',
+      'med4.tipo':        'Web + Podcast · A2–B1',
+      'start.title':      'How to start?',
+      'start.step1.title':'Step 1',
+      'start.step1.desc': 'You must choose a learning methodology that adapts to your own style.',
+      'start.step2.title':'Step 2',
+      'start.step2.desc': 'Feed that methodology with the content we have prepared for you and learn to distinguish for yourself what is useful.',
+      'start.step3.title':'Step 3',
+      'start.step3.desc': 'Lean on technology and the self-learner community.',
+      'contact.label':    '📲 We are here to help you',
+      'contact.title':    'Ready to start your<br>path to <em>bilingualism</em>?',
+      'contact.desc':     'Write to us directly on WhatsApp. Tell us what level you\'re at, what you\'ve tried before and what you want to achieve — we\'ll guide you at no cost and with no commitments.',
+      'contact.card.title':'Chat with us',
+      'contact.card.desc':'We respond in less than 24 hours. You can write to us in Spanish — we\'ll practice English together when you start your process.',
+      'contact.wa.btn':   'Write on WhatsApp',
+      'contact.note':     'Clicking will open WhatsApp with a preset message',
+      'footer.tagline':   'Learn Spanish and English in a self-taught way',
+      'footer.contact':   'Contact us',
+    }
+  };
+
+  let currentLang = 'es';
+
+  function toggleLang() {
+    currentLang = currentLang === 'es' ? 'en' : 'es';
+    const btn = document.getElementById('lang-toggle');
+    btn.textContent = currentLang === 'es' ? 'EN' : 'ES';
+    btn.title = currentLang === 'es' ? 'Switch to English' : 'Cambiar a Español';
+    
+    const t = translations[currentLang];
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // Update html lang attribute
+    document.documentElement.lang = currentLang;
+  }
+
+  // ─── NAV show after scroll ───
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) nav.classList.add('visible');
+    else nav.classList.remove('visible');
+  });
+
+  // ─── Intersection Observer for reveal animations ───
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // ─── Smooth anchor scroll ───
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // ─── Accordion toggle ───
+  function toggleAcc(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ─── Contenido tabs ───
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.cont-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.ctab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ─── Tips expandibles ───
+  function toggleTip(card) {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.tip-card').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+</script>
+
+</body>
+</html>
